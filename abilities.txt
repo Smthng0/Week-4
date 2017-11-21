@@ -1,0 +1,58 @@
+Adapt
+Battlecry
+Charge
+Choose One
+Combo
+Counter
+Deathrattle
+Discover
+Divine Shield
+Enrage
+Freeze
+Immune
+Inspire
+Lifesteal
+Mega-Windfury
+Overload
+Poisonous
+Quest
+Secret
+Silence
+Stealth
+Spell Damage
+Taunt
+Windfury
+Card draw effect
+Cast spell
+Copy
+Deal damage
+Destroy
+Disable Hero Power
+Discard
+Enchant
+Elusive
+Equip
+Forgetful
+Gain Armor
+Generate
+Increment attribute
+Joust
+Mind control effect
+Modify cost
+Multiply attribute
+No Durability loss
+Permanent
+Put into battlefield
+Put into hand
+Refresh Mana
+Remove from deck
+Replace
+Restore Health
+Return
+Set attribute
+Shuffle into deck
+Spend mana
+Summon
+Transform
+Transform in hand
+Unlimited attacks
