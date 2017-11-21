@@ -7,8 +7,9 @@ import java.util.List;
 public class Deck {
     int remainingCards = 30;
     int dmgCounter = 0;
+    HearthstoneCard noCards = null;
     List<HearthstoneCard> deck = new ArrayList<>();
-    HearthstoneCard noCard = null;
+
 
     public Deck (List<HearthstoneCard> list) throws IllegalArgumentException {
         if (list.size() != 30){
@@ -22,7 +23,7 @@ public class Deck {
     public HearthstoneCard drawCard() {
         if (remainingCards == 0){
             dmgCounter += 1;
-            return noCard;
+            return noCards;
         }
 
         remainingCards--;
@@ -32,7 +33,7 @@ public class Deck {
     public HearthstoneCard removeTargetCard(HearthstoneCard card) {
         if ((remainingCards == 0)
                 || (!deck.contains(card))) {
-            return noCard;
+            return noCards;
         }
 
         remainingCards--;

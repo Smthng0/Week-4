@@ -9,12 +9,12 @@ public class Hand {
     HearthstoneCard noCard = null;
     List<HearthstoneCard> hand = new ArrayList<>(limit);
 
-    public Hand (List<HearthstoneCard> list) throws IllegalArgumentException {
-        if ( (list.size() != 3) ^ (list.size() != 4) ){
-            throw new IllegalArgumentException("Not a valid hand!");
+    public Hand (Deck deck, int ) {
+        hand = null;
+        for (int i = 0; i < 3; i++) {
+            hand.add(deck.drawCard());
+            numberOfCards++;
         }
-
-        hand.addAll(list);
     }
 
     public HearthstoneCard drawCard(HearthstoneCard card) {
@@ -23,22 +23,22 @@ public class Hand {
             hand.add(card);
             return card;
         } else {
-            card.discard();
+            card.goToGraveyard();
             return noCard;
         }
     }
 
-    public HearthstoneCard discard(HearthstoneCard card) {
+    public HearthstoneCard discardCard(HearthstoneCard card) {
         if (numberOfCards == 0){
-            return noCard;
+            return noCards;
         } else {
-            return card.discard();
+            return card.goToGraveyard();
         }
     }
 
-    public HearthstoneCard play(HearthstoneCard card) {
+    public HearthstoneCard playCard(HearthstoneCard card) {
         card.play();
-        return card.discard();
+        return card.goToGraveyard();
     }
 
     public HearthstoneCard returnToHand(HearthstoneCard card) {

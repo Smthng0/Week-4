@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AbilitiesTest {
+public class AbilitiesListTest {
 
     @Test
-    public void generate_abilities_OK() {
+    public void generate_abilities_List_OK() {
         List<String> testingList = new ArrayList<>();
 
         try (Stream<String> abilities = Files.lines(Paths.get("abilities.txt"))) {
@@ -33,10 +33,12 @@ public class AbilitiesTest {
 
 
 
-        Abilities abilities = new Abilities(testingSet);
-        System.out.println(abilities.allAbilities.toString());
+        AbilitiesList abilitiesList = new AbilitiesList(testingSet);
+        AbilitiesList abilitiesListNull = new AbilitiesList();
+        System.out.println(abilitiesList.allAbilities.toString());
         System.out.println(testingSet.toString());
-        System.out.println(abilities.hasAbilities.toString());
+        System.out.println(abilitiesList.hasAbilities.toString());
+        System.out.println(abilitiesListNull.hasAbilities.toString());
     }
 
 }
