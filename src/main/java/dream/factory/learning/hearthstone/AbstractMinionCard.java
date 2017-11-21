@@ -1,5 +1,6 @@
 package dream.factory.learning.hearthstone;
 
+import dream.factory.learning.hearthstone.abilities.Battlecry;
 import dream.factory.learning.hearthstone.abilities.Charge;
 import dream.factory.learning.hearthstone.abilities.Deathrattle;
 import dream.factory.learning.hearthstone.abilities.DivineShield;
@@ -23,6 +24,8 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Targetable 
             if (ability instanceof Charge){
                 ability.effect();
                 numberOfAttacks = 1;
+            } else if (ability instanceof Battlecry){
+                ability.effect();
             }
         }
 
