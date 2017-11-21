@@ -2,12 +2,12 @@ package dream.factory.learning.hearthstone;
 
 import java.util.List;
 
-public class AbstractWeaponCard implements HearthstoneCard {
+public abstract class AbstractWeaponCard implements HearthstoneCard {
     String title;
     int manaCost;
     int attack;
     int durability;
-    List abilities;
+    List<Ability> abilities;
 
     @Override
     public int play() {

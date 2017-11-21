@@ -8,40 +8,51 @@ public class Hand {
     int limit = 7;
     HearthstoneCard noCard = null;
     List<HearthstoneCard> hand = new ArrayList<>(limit);
+    Deck deck = null;
 
-    public Hand (Deck deck, int ) {
+    public Hand (Deck deck) {
         hand = null;
         for (int i = 0; i < 3; i++) {
             hand.add(deck.drawCard());
             numberOfCards++;
         }
+        this.deck = deck;
     }
 
-    public HearthstoneCard drawCard(HearthstoneCard card) {
-        if (numberOfCards < limit){
-            numberOfCards++;
-            hand.add(card);
-            return card;
-        } else {
-            card.goToGraveyard();
-            return noCard;
-        }
+    public Hand (Deck deck, boolean playsSecond){
+        this(deck);
+        hand.add(new SpellCard("Mana Crystal", 0, null));
     }
 
-    public HearthstoneCard discardCard(HearthstoneCard card) {
+    public void drawCard() {
+        numberOfCards++;
+        hand.add(deck.drawCard());
+    }
+
+    public void addCard(HearthstoneCard card) {
+        hand.add(card);
+        numberOfCards++;
+    }
+
+    public void discardCard(HearthstoneCard card) {
         if (numberOfCards == 0){
-            return noCards;
+            System.out.println("No more cards!");
         } else {
-            return card.goToGraveyard();
+            numberOfCards--;
+            hand.remove(card);
+            card.goToGraveyard();
         }
     }
 
-    public HearthstoneCard playCard(HearthstoneCard card) {
+    public void playCard(HearthstoneCard card) {
         card.play();
-        return card.goToGraveyard();
+        hand.remove(card);
+        numberOfCards--;
     }
 
-    public HearthstoneCard returnToHand(HearthstoneCard card) {
-        return this.drawCard(card);
+    public void returnToHand(HearthstoneCard card) {
+        hand.add(card);
+        numberOfCards++;
+        card.removeFromPlay();
     }
 }

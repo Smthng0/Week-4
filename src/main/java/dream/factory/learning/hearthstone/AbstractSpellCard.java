@@ -2,10 +2,10 @@ package dream.factory.learning.hearthstone;
 
 import java.util.List;
 
-public class AbstractSpellCard implements HearthstoneCard {
+public abstract class AbstractSpellCard implements HearthstoneCard {
     String title;
     int manaCost;
-    List abilities;
+    List<Ability> abilities;
 
     @Override
     public int play() {
@@ -18,4 +18,8 @@ public class AbstractSpellCard implements HearthstoneCard {
         return manaCost;
     }
 
+    @Override
+    public void removeFromPlay(){
+        this.goToGraveyard();
+    }
 }

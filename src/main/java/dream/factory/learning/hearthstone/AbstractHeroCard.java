@@ -2,16 +2,21 @@ package dream.factory.learning.hearthstone;
 
 import java.util.List;
 
-public class AbstractHeroCard {
+public abstract class AbstractHeroCard implements HearthstoneCard {
     String title;
     int manaCost;
     int armor;
-    List abilities;
+    List<Ability> abilities;
 
     @Override
     public int play() {
         //do ability
         return manaCost;
+    }
+
+    @Override
+    public void removeFromPlay(){
+        this.goToGraveyard();
     }
 
 }

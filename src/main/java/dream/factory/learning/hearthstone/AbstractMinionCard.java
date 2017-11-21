@@ -3,13 +3,13 @@ package dream.factory.learning.hearthstone;
 import java.util.Collections;
 import java.util.List;
 
-public class AbstractMinionCard implements HearthstoneCard {
+public abstract class AbstractMinionCard implements HearthstoneCard {
     String title;
     int manaCost;
     int attack;
     int health;
     int numberOfAttacks;
-    List abilities;
+    List<Ability> abilities;
 
     @Override
     public int play() {
@@ -51,5 +51,10 @@ public class AbstractMinionCard implements HearthstoneCard {
         if (target.health < 0) {
             target.isDead();
         }
+    }
+
+    @Override
+    public void removeFromPlay(){
+        this.goToGraveyard();
     }
 }

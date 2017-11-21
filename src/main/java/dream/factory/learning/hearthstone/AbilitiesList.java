@@ -39,7 +39,7 @@ public class AbilitiesList {
         }
     }
 
-    //STATIC FINAL listu za "comes into play" abilitiesWhenPlayed ili nesto drugo
+    //Tu cu napraviti liste ability-a po triggerima (comesIntoPlayAbility, triggerAbility, deathAbility...)
 
 
 }
