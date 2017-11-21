@@ -1,9 +1,12 @@
 package dream.factory.learning.hearthstone;
 
-public class Player {
+public class Player implements Targetable {
     int armor = 0;
     int health = 30;
     public int manaPool = 0;
+    boolean hasWeapon = false;
+    int attack = 0;
+
     Deck deck = null;
     Hand hand = null;
 
@@ -17,7 +20,7 @@ public class Player {
         this.hand = new Hand(deck, playsSecond);
     }
 
-    public void isDead() {
-        System.out.println("Game is over! Somebody won!");
+    public boolean isDead() {
+        return (this.health <= 0);
     }
 }

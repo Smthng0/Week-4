@@ -13,11 +13,6 @@ public abstract class AbstractSpellCard implements HearthstoneCard {
         return manaCost;
     }
 
-    public int play(Object target) {
-        //do stuff to target (ability)
-        return manaCost;
-    }
-
     @Override
     public void removeFromPlay(){
         this.goToGraveyard();

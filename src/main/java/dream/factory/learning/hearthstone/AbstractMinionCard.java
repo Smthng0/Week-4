@@ -1,24 +1,37 @@
 package dream.factory.learning.hearthstone;
 
-import java.util.Collections;
+import dream.factory.learning.hearthstone.abilities.Charge;
+import dream.factory.learning.hearthstone.abilities.Deathrattle;
+import dream.factory.learning.hearthstone.abilities.DivineShield;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractMinionCard implements HearthstoneCard {
+public abstract class AbstractMinionCard implements HearthstoneCard, Targetable {
     String title;
     int manaCost;
     int attack;
     int health;
     int numberOfAttacks;
-    List<Ability> abilities;
+    List<Ability> abilities = new ArrayList<>();
 
     @Override
     public int play() {
         numberOfAttacks = 0;
 
+        for (Ability ability : abilities) {
+            if (ability instanceof Charge){
+                ability.effect();
+                numberOfAttacks = 1;
+            }
+        }
+
         return manaCost;
     }
 
     public void attack(AbstractMinionCard target) {
+        int tempHealth = this.health;
+
         if (target == null) {
             System.out.println("Wrong target!");
             return;
@@ -26,35 +39,71 @@ public abstract class AbstractMinionCard implements HearthstoneCard {
 
         target.health = target.health - this.attack;
         this.health = this.health - target.attack;
-        numberOfAttacks--;
 
-        if (this.health <= 0) {
-            this.goToGraveyard();
+        //Divine shield ability (takes no damage and removes divine shield)
+        for (Ability ability : abilities) {
+            if (ability instanceof DivineShield){
+                ability.effect();
+                abilities.remove(ability);
+                this.health = tempHealth;
+                break;
+            }
         }
 
-        if (target.health <= 0) {
-            target.goToGraveyard();
+        numberOfAttacks--;
+
+        if (this.isDead()) {
+            this.removeFromPlay();
+        }
+
+        if (target.isDead()) {
+            target.removeFromPlay();
         }
     }
 
     public void attack(Player target) {
+        int modifiedAttack = this.attack;
+
         if (target.armor < this.attack) {
-            this.attack -= target.armor;
+            modifiedAttack -= target.armor;
             target.armor = 0;
         } else if (target.armor >= this.attack){
             target.armor -= this.attack;
-            return;
+            modifiedAttack = 0;
         }
 
-        target.health -= this.attack;
+        target.health -= modifiedAttack;
 
-        if (target.health < 0) {
-            target.isDead();
+        if (target.isDead()) {
+            System.out.println("I won!!!");
+            //need to make some victory stuff here
         }
+
+        if (target.hasWeapon){
+            this.health -= target.attack;
+
+            if (this.isDead()) {
+                this.removeFromPlay();
+            }
+        }
+
+    }
+
+    public boolean isDead(){
+        return (this.health <= 0);
     }
 
     @Override
     public void removeFromPlay(){
         this.goToGraveyard();
+
+        for (Ability ability : abilities) {
+            if (ability instanceof Deathrattle){
+                ability.effect();
+                break;
+            }
+        }
+
     }
+
 }
