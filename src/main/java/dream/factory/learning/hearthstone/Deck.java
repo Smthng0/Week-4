@@ -27,6 +27,7 @@ public class Deck {
         }
 
         remainingCards--;
+
         return deck.remove(0);
     }
 
@@ -44,9 +45,24 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    public boolean searchCard(String title) {
+        for (HearthstoneCard card : deck) {
+            if (card.getTitle().equals(title)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public boolean searchCard(HearthstoneCard card) {
-        return deck.contains(card);
+        for (HearthstoneCard searchCard : deck) {
+            if (searchCard.getTitle().equals(card.getTitle())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

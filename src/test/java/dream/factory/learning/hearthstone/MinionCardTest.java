@@ -13,21 +13,85 @@ import static org.junit.Assert.*;
 public class MinionCardTest {
 
     @Test
-    public void attack_OK() {
-        List<Ability> abilities1 = new ArrayList<>();
-        List<Ability> abilities2 = new ArrayList<>();
-        abilities1.add(new Windfury());
-        abilities1.add(new Charge());
-        abilities2.add(new DivineShield());
+    public void create_minion_OK() {
+        List<Ability> ability = new ArrayList<>();
+        MinionCard minion = new MinionCard("Minion1", 8, 17, 4);
+        MinionCard minionWithAbility = new MinionCard("Minion1", 8, 5, 8, ability);
 
-        MinionCard minion1 = new MinionCard("Minion1", 2, 2, 6, abilities1);
-        MinionCard minion2 = new MinionCard("Minion1", 3, 4, 3, abilities2);
+        assertTrue((minion.title.equals("Minion1"))
+                &&(minion.manaCost == 8)
+                &&(minion.attack == 17)
+                &&(minion.health == 4)
+                &&(!minion.hasAbilities)
+                &&(minion.abilities == null));
+        assertTrue((minionWithAbility.health == 8)
+                &&(minionWithAbility.hasAbilities)
+                &&(minionWithAbility.abilities != null));
+    }
+
+    @Test
+    public void attack_sequence_OK() {
+        MinionCard minion1 = new MinionCard("Minion1", 2, 2, 6);
+        MinionCard minion2 = new MinionCard("Minion2", 3, 4, 3);
+        minion1.play();
+        minion2.play();
+
+        minion1.remainingAttacks = minion1.maxAttacks;
+        minion1.attack(minion2);
+
+        assertTrue(minion1.health == 2);
+        assertTrue(minion2.health == 1);
+    }
+
+    @Test
+    public void Windfury_attack_sequence_OK () {
+        List<Ability> ability = new ArrayList<>();
+        ability.add(new Windfury());
+
+        MinionCard minion1 = new MinionCard("Minion1", 2, 2, 6, ability);
+        MinionCard minion2 = new MinionCard("Minion2", 3, 2, 3);
+        minion1.play();
+        minion2.play();
+
+        minion1.remainingAttacks = minion1.maxAttacks;
+        minion1.attack(minion2);
+
+        assertTrue(minion1.health == 2);
+        assertTrue(minion2.health == -1);
+
+    }
+
+    @Test
+    public void DivineShield_attack_sequence_OK () {
+        List<Ability> ability = new ArrayList<>();
+        ability.add(new DivineShield());
+
+        MinionCard minion1 = new MinionCard("Minion1", 2, 4, 6);
+        MinionCard minion2 = new MinionCard("Minion2", 3, 3, 3, ability);
+        minion1.play();
+        minion2.play();
+
+        minion1.remainingAttacks = minion1.maxAttacks;
+        minion1.attack(minion2);
+
+        assertTrue(minion1.health == 3);
+        assertTrue(minion2.health == 3);
+    }
+
+    @Test
+    public void Charge_attack_sequence_OK () {
+        List<Ability> ability = new ArrayList<>();
+        ability.add(new Charge());
+
+        MinionCard minion1 = new MinionCard("Minion1", 2, 4, 6, ability);
+        MinionCard minion2 = new MinionCard("Minion2", 3, 3, 3);
         minion1.play();
         minion2.play();
 
         minion1.attack(minion2);
-        System.out.println(minion1.health + " " + minion2.health);
 
+        assertTrue(minion1.health == 3);
+        assertTrue(minion2.health == -1);
     }
 
 }

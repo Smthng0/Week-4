@@ -9,4 +9,5 @@ public class Silence implements Ability {
     public void effect() {
         (Board.getTarget()).suppressAbility();
     }
+
 }

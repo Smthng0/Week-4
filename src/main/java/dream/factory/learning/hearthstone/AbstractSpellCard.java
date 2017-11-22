@@ -16,4 +16,9 @@ public abstract class AbstractSpellCard implements HearthstoneCard {
     public void removeFromPlay(){
         this.goToGraveyard();
     }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
 }

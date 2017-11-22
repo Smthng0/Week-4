@@ -24,4 +24,9 @@ public abstract class AbstractWeaponCard implements HearthstoneCard {
 
     }
 
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
 }

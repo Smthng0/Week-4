@@ -12,4 +12,6 @@ public interface HearthstoneCard {
 
     void removeFromPlay();
 
+    String getTitle();
+
 }

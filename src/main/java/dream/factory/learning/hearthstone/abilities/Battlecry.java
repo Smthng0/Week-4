@@ -2,8 +2,7 @@ package dream.factory.learning.hearthstone.abilities;
 
 import dream.factory.learning.hearthstone.Ability;
 
-public abstract class Battlecry implements Ability {
-    String trigger = "On play";
+public class Battlecry implements Ability {
 
     @Override
     public void effect() {

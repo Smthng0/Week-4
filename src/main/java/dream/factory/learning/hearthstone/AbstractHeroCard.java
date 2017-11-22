@@ -18,4 +18,9 @@ public abstract class AbstractHeroCard implements HearthstoneCard {
         this.goToGraveyard();
     }
 
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
 }

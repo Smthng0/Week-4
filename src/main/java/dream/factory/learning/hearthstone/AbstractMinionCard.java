@@ -12,22 +12,25 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Attackable 
     int health;
     int maxAttacks;
     int remainingAttacks;
-    List<Ability> abilities = new ArrayList<>();
+    boolean hasAbilities;
+    List<Ability> abilities;
 
     @Override
     public void play() {
         maxAttacks = 1;
         remainingAttacks = 0;
 
-        for (Ability ability : this.abilities) {
-            if (ability instanceof Windfury){
-                ability.effect();
-                maxAttacks = 2;
-            } else if (ability instanceof Charge){
-                ability.effect();
-                remainingAttacks = maxAttacks;
-            } else if (ability instanceof Battlecry){
-                ability.effect();
+        if (hasAbilities){
+            for (Ability ability : this.abilities) {
+                if (ability instanceof Windfury){
+                    ability.effect();
+                    maxAttacks = 2;
+                } else if (ability instanceof Charge){
+                    ability.effect();
+                    remainingAttacks = maxAttacks;
+                } else if (ability instanceof Battlecry){
+                    ability.effect();
+                }
             }
         }
 
@@ -63,16 +66,18 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Attackable 
 
         this.health -= damage;
 
-        //Divine shield ability (takes no damage and removes divine shield)
-        for (Ability ability : abilities) {
-            if (ability instanceof DivineShield){
-                DivineShield dummy = (DivineShield)ability;
-                if (!dummy.usedUp){
-                    this.health = tempHealth;
+        if (hasAbilities){
+            for (Ability ability : abilities) {
+                if (ability instanceof DivineShield){
+                    DivineShield dummy = (DivineShield)ability;
+                    if (!dummy.usedUp){
+                        this.health = tempHealth;
+                    }
+                    ability.effect();
                 }
-                ability.effect();
             }
         }
+
 
         //this will go to engine/board probably
         if (this.isDead()){
@@ -94,13 +99,19 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Attackable 
     public void removeFromPlay(){
         this.goToGraveyard();
 
-        //this will probably be for board/engine
-        for (Ability ability : abilities) {
-            if (ability instanceof Deathrattle){
-                ability.effect();
+        if (hasAbilities){
+            for (Ability ability : abilities) {
+                if (ability instanceof Deathrattle){
+                    ability.effect();
+                }
             }
         }
 
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
     }
 
     @Override
