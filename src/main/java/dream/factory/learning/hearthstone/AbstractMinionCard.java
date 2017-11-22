@@ -1,47 +1,71 @@
 package dream.factory.learning.hearthstone;
 
-import dream.factory.learning.hearthstone.abilities.Battlecry;
-import dream.factory.learning.hearthstone.abilities.Charge;
-import dream.factory.learning.hearthstone.abilities.Deathrattle;
-import dream.factory.learning.hearthstone.abilities.DivineShield;
+import dream.factory.learning.hearthstone.abilities.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractMinionCard implements HearthstoneCard, Targetable {
+public abstract class AbstractMinionCard implements HearthstoneCard, Attackable {
     String title;
     int manaCost;
     int attack;
     int health;
-    int numberOfAttacks;
+    int maxAttacks;
+    int remainingAttacks;
     List<Ability> abilities = new ArrayList<>();
 
     @Override
-    public int play() {
-        numberOfAttacks = 0;
+    public void play() {
+        maxAttacks = 1;
+        remainingAttacks = 0;
 
         for (Ability ability : abilities) {
-            if (ability instanceof Charge){
+            if (ability instanceof Windfury){
                 ability.effect();
-                numberOfAttacks = 1;
+                maxAttacks = 2;
+            } else if (ability instanceof Charge){
+                ability.effect();
+                remainingAttacks = maxAttacks;
             } else if (ability instanceof Battlecry){
                 ability.effect();
             }
         }
 
-        return manaCost;
     }
 
-    public void attack(AbstractMinionCard target) {
+    @Override
+    public void attack(Attackable target) {
+        if (target == null) {
+            System.out.println("No target!");
+        } else {
+            while (remainingAttacks > 0) {
+                //the defend part will go to board/engine once it's implemented
+                target.defend(this);
+
+                if (target instanceof AbstractMinionCard) {
+                    this.takeDamage(target.getAttack());
+                }
+
+                remainingAttacks--;
+            }
+        }
+    }
+
+    public void defend(Attackable target){
+        this.takeDamage(target.getAttack());
+
+        //this will go to engine/board probably
+        if (this.isDead()){
+            this.removeFromPlay();
+        }
+    }
+
+
+    @Override
+    public void takeDamage(int damage){
         int tempHealth = this.health;
 
-        if (target == null) {
-            System.out.println("Wrong target!");
-            return;
-        }
-
-        target.health = target.health - this.attack;
-        this.health = this.health - target.attack;
+        this.health -= damage;
 
         //Divine shield ability (takes no damage and removes divine shield)
         for (Ability ability : abilities) {
@@ -49,64 +73,36 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Targetable 
                 ability.effect();
                 abilities.remove(ability);
                 this.health = tempHealth;
-                break;
             }
-        }
-
-        numberOfAttacks--;
-
-        if (this.isDead()) {
-            this.removeFromPlay();
-        }
-
-        if (target.isDead()) {
-            target.removeFromPlay();
         }
     }
 
-    public void attack(Player target) {
-        int modifiedAttack = this.attack;
-
-        if (target.armor < this.attack) {
-            modifiedAttack -= target.armor;
-            target.armor = 0;
-        } else if (target.armor >= this.attack){
-            target.armor -= this.attack;
-            modifiedAttack = 0;
-        }
-
-        target.health -= modifiedAttack;
-
-        if (target.isDead()) {
-            System.out.println("I won!!!");
-            //need to make some victory stuff here
-        }
-
-        if (target.hasWeapon){
-            this.health -= target.attack;
-
-            if (this.isDead()) {
-                this.removeFromPlay();
-            }
-        }
-
+    @Override
+    public void suppressAbility(){
+        this.abilities = null;
     }
 
+    @Override
     public boolean isDead(){
-        return (this.health <= 0);
+        return this.health <= 0;
     }
 
     @Override
     public void removeFromPlay(){
         this.goToGraveyard();
 
+        //this will probably be for board/engine
         for (Ability ability : abilities) {
             if (ability instanceof Deathrattle){
                 ability.effect();
-                break;
             }
         }
 
+    }
+
+    @Override
+    public int getAttack() {
+        return this.attack;
     }
 
 }

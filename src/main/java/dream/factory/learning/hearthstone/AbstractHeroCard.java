@@ -9,9 +9,8 @@ public abstract class AbstractHeroCard implements HearthstoneCard {
     List<Ability> abilities;
 
     @Override
-    public int play() {
+    public void play() {
         //do ability
-        return manaCost;
     }
 
     @Override

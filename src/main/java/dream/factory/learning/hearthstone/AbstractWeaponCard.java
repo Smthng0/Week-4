@@ -4,18 +4,13 @@ import dream.factory.learning.hearthstone.abilities.Deathrattle;
 
 import java.util.List;
 
-public abstract class AbstractWeaponCard implements HearthstoneCard, Targetable {
+public abstract class AbstractWeaponCard implements HearthstoneCard {
     String title;
     int manaCost;
     int attack;
     int durability;
     List<Ability> abilities;
 
-    @Override
-    public int play() {
-        //do ability
-        return manaCost;
-    }
 
     @Override
     public void removeFromPlay(){
@@ -24,7 +19,6 @@ public abstract class AbstractWeaponCard implements HearthstoneCard, Targetable 
         for (Ability ability : abilities) {
             if (ability instanceof Deathrattle){
                 ability.effect();
-                return;
             }
         }
 

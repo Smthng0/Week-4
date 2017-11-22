@@ -10,18 +10,18 @@ public class Hand {
     List<HearthstoneCard> hand = new ArrayList<>(limit);
     Deck deck = null;
 
-    public Hand (Deck deck) {
+    public Hand (Deck deck, boolean playsFirst){
         hand = null;
-        for (int i = 0; i < 3; i++) {
-            hand.add(deck.drawCard());
-            numberOfCards++;
-        }
         this.deck = deck;
-    }
 
-    public Hand (Deck deck, boolean playsSecond){
-        this(deck);
-        hand.add(new SpellCard("Mana Crystal", 0, null));
+        for (int i = 0; i < 3; i++) {
+            this.drawCard();
+        }
+
+        if (!playsFirst){
+            this.addCard(new SpellCard("Mana Crystal", 0, null));
+        }
+
     }
 
     public void drawCard() {
@@ -35,12 +35,20 @@ public class Hand {
     }
 
     public void discardCard(HearthstoneCard card) {
-        if (numberOfCards == 0){
+        if (noMoreCards()){
+            System.out.println("No more cards!");
+        } else if (hand.remove(card)){
+            numberOfCards--;
+            card.goToGraveyard();
+        }
+    }
+
+    public void discardCard(int index) {
+        if (noMoreCards()){
             System.out.println("No more cards!");
         } else {
             numberOfCards--;
-            hand.remove(card);
-            card.goToGraveyard();
+            (hand.remove(index)).goToGraveyard();
         }
     }
 
@@ -54,5 +62,9 @@ public class Hand {
         hand.add(card);
         numberOfCards++;
         card.removeFromPlay();
+    }
+
+    public boolean noMoreCards(){
+        return this.numberOfCards == 0;
     }
 }
