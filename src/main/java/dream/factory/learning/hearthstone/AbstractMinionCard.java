@@ -19,7 +19,7 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Attackable 
         maxAttacks = 1;
         remainingAttacks = 0;
 
-        for (Ability ability : abilities) {
+        for (Ability ability : this.abilities) {
             if (ability instanceof Windfury){
                 ability.effect();
                 maxAttacks = 2;
@@ -39,6 +39,7 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Attackable 
             System.out.println("No target!");
         } else {
             while (remainingAttacks > 0) {
+
                 //the defend part will go to board/engine once it's implemented
                 target.defend(this);
 
@@ -46,18 +47,13 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Attackable 
                     this.takeDamage(target.getAttack());
                 }
 
-                remainingAttacks--;
+                this.remainingAttacks--;
             }
         }
     }
 
     public void defend(Attackable target){
         this.takeDamage(target.getAttack());
-
-        //this will go to engine/board probably
-        if (this.isDead()){
-            this.removeFromPlay();
-        }
     }
 
 
@@ -70,10 +66,17 @@ public abstract class AbstractMinionCard implements HearthstoneCard, Attackable 
         //Divine shield ability (takes no damage and removes divine shield)
         for (Ability ability : abilities) {
             if (ability instanceof DivineShield){
+                DivineShield dummy = (DivineShield)ability;
+                if (!dummy.usedUp){
+                    this.health = tempHealth;
+                }
                 ability.effect();
-                abilities.remove(ability);
-                this.health = tempHealth;
             }
+        }
+
+        //this will go to engine/board probably
+        if (this.isDead()){
+            this.removeFromPlay();
         }
     }
 

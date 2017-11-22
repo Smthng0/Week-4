@@ -6,7 +6,7 @@ public interface HearthstoneCard {
 
     //this will maybe be in the engine/board
     default HearthstoneCard goToGraveyard(){
-        System.out.println("NYI");
+        System.out.println("NYI goToGraveyard");
         return this;
     }
 
