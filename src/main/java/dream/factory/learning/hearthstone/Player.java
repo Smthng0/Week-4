@@ -76,7 +76,6 @@ public class Player implements Attackable {
 
     }
 
-
     @Override
     public int getAttack() {
         return this.attack;
@@ -85,6 +84,10 @@ public class Player implements Attackable {
     @Override
     public void suppressAbility(){
         this.weapon.abilities = null;
+    }
+
+    public void supressClassAbility(){
+        this.classAbility = null;
     }
 
     @Override

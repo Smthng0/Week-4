@@ -1,5 +1,7 @@
 package dream.factory.learning.hearthstone;
 
+import dream.factory.learning.hearthstone.abilities.Charge;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -26,7 +28,7 @@ public class Board {
 
     public static Attackable getTarget() {
         //placeholder for getTarget
-        return new Player("Vice", new Deck(new ArrayList<HearthstoneCard>()), false);
+        return new MinionCard("Minion", 2, 3, 4, null);
     }
 
     //board temporarely has everything static (need engine to do something)
