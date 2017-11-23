@@ -6,7 +6,7 @@ public interface HearthstoneCard {
 
     void play();
 
-    HearthstoneCard goToGraveyard();
+    void goToGraveyard();
 
     boolean hasAbility();
 

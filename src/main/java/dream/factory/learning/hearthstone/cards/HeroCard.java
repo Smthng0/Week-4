@@ -1,5 +1,6 @@
 package dream.factory.learning.hearthstone.cards;
 
+import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.abilities.Ability;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class HeroCard implements HearthstoneCard {
     }
 
     @Override
-    public HearthstoneCard goToGraveyard() {
-        return null;
+    public void goToGraveyard() {
+        Engine.getActivePlayer().goToGraveyard(this);
     }
 
     @Override

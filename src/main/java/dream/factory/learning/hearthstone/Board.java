@@ -21,9 +21,8 @@ public class Board {
         }
     }
 
-    public HearthstoneCard addToGraveyard(HearthstoneCard card){
+    public void addToGraveyard(HearthstoneCard card){
         graveyard.add(card);
-        return card = null;
     }
 
     public MinionCard getAnyMinion(){
@@ -32,6 +31,11 @@ public class Board {
         } else {
             return backingBoard.get(0);
         }
+    }
+
+    public void returnToHand(HearthstoneCard card){
+        Engine.getActivePlayer().getHand().addCard(card);
+        card = null;
     }
 
     private boolean isFull() {

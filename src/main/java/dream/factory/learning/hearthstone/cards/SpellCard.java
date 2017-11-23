@@ -1,5 +1,6 @@
 package dream.factory.learning.hearthstone.cards;
 
+import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.abilities.Ability;
 
 import java.util.List;
@@ -18,12 +19,16 @@ public class SpellCard implements HearthstoneCard {
 
     @Override
     public void play() {
-        //do ability
+        for (Ability ability : abilities) {
+            ability.effect();
+        }
+
+        this.goToGraveyard();
     }
 
     @Override
-    public HearthstoneCard goToGraveyard() {
-        return null;
+    public void goToGraveyard() {
+        Engine.getActivePlayer().goToGraveyard(this);
     }
 
     @Override

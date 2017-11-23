@@ -43,11 +43,6 @@ public class MinionCard implements HearthstoneCard, Attackable {
     }
 
     @Override
-    public HearthstoneCard goToGraveyard() {
-        return Engine.getActivePlayer().goToGraveyard(this);
-    }
-
-    @Override
     public void attack(Attackable target) {
         if (target == null) {
             System.out.println("No target!");
@@ -91,7 +86,6 @@ public class MinionCard implements HearthstoneCard, Attackable {
             this.health = tempHealth;
         }
 
-        //this will go to engine/board probably
         if (this.isDead()){
             this.removeFromPlay();
         }
@@ -141,6 +135,15 @@ public class MinionCard implements HearthstoneCard, Attackable {
     @Override
     public boolean isDead(){
         return this.health <= 0;
+    }
+
+    @Override
+    public void goToGraveyard() {
+        if (this.getAbility("Deathrattle") != null) {
+            this.getAbility("Deathrattle").effect();
+        }
+
+        Engine.getActivePlayer().goToGraveyard(this);
     }
 
     @Override

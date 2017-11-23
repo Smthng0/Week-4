@@ -77,8 +77,8 @@ public class Player implements Attackable {
         }
     }
 
-    public HearthstoneCard goToGraveyard(HearthstoneCard card){
-        return board.addToGraveyard(card);
+    public void goToGraveyard(HearthstoneCard card){
+        board.addToGraveyard(card);
     }
 
     @Override

@@ -68,12 +68,6 @@ public class Hand {
         numberOfCards--;
     }
 
-    public void returnToHand(HearthstoneCard card) {
-        backingHand.add(card);
-        numberOfCards++;
-        card.removeFromPlay();
-    }
-
     public boolean hasCards(){
         return this.numberOfCards > 0;
     }

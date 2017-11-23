@@ -52,9 +52,24 @@ public class WeaponCard implements HearthstoneCard {
         player.setRemainingAttacks(player.getMaxAttacks());
     }
 
-    @Override
-    public HearthstoneCard goToGraveyard() {
+    public Ability getAbility(String ability) {
+        for (Ability abilityIterator : abilities) {
+            if (abilityIterator.getAbilityType()
+                    .equals(ability)) {
+                return abilityIterator;
+            }
+        }
+
         return null;
+    }
+
+    @Override
+    public void goToGraveyard() {
+        if (this.getAbility("Deathrattle") != null) {
+            this.getAbility("Deathrattle").effect();
+        }
+
+        Engine.getActivePlayer().goToGraveyard(this);
     }
 
     @Override
@@ -99,6 +114,5 @@ public class WeaponCard implements HearthstoneCard {
     public List<Ability> getAbilities() {
         return abilities;
     }
-
 
 }
