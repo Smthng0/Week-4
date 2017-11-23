@@ -99,7 +99,4 @@ public class Deck {
         return dmgCounter;
     }
 
-    public List<HearthstoneCard> getBackingDeck() {
-        return backingDeck;
-    }
 }

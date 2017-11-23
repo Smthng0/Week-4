@@ -4,6 +4,8 @@ import dream.factory.learning.hearthstone.Attackable;
 import dream.factory.learning.hearthstone.abilities.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MinionCard implements HearthstoneCard, Attackable {
@@ -32,6 +34,7 @@ public class MinionCard implements HearthstoneCard, Attackable {
     public void play() {
         maxAttacks = 1;
         remainingAttacks = 0;
+        sortAbilitiesReverse();
 
         for (Ability ability : this.abilities) {
             if (ability instanceof Windfury){
@@ -107,6 +110,11 @@ public class MinionCard implements HearthstoneCard, Attackable {
                 ability.effect();
             }
         }
+    }
+
+    public void sortAbilitiesReverse() {
+        abilities.sort(Comparator.comparing(Ability::getAbilityType));
+        Collections.reverse(abilities);
     }
 
     @Override

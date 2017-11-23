@@ -16,7 +16,7 @@ public class WeaponCSVReader {
 
         List<WeaponCard> weaponList = new ArrayList<>();
         String weaponFile = "Weapons.csv";
-        String line = "";
+        String line;
         String csvSplit = ",";
 
         try (BufferedReader br = new BufferedReader(new FileReader(weaponFile))) {

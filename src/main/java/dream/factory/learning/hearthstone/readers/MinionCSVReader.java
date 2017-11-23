@@ -15,7 +15,7 @@ public class MinionCSVReader {
 
         List<MinionCard> minionList = new ArrayList<>();
         String minionFile = "Minions.csv";
-        String line = "";
+        String line;
         String csvSplit = ",";
 
         try (BufferedReader br = new BufferedReader(new FileReader(minionFile))) {

@@ -42,7 +42,7 @@ public class MinionCardTest {
     }
 
     @Test
-    public void Windfury_attack_sequence_OK () {
+    public void Windfury_OK () {
         List<Ability> ability = new ArrayList<>();
         ability.add(new Windfury());
 
@@ -60,7 +60,7 @@ public class MinionCardTest {
     }
 
     @Test
-    public void DivineShield_attack_sequence_OK () {
+    public void DivineShield_OK () {
         List<Ability> ability = new ArrayList<>();
         ability.add(new DivineShield());
 
@@ -77,12 +77,10 @@ public class MinionCardTest {
     }
 
     @Test
-    public void Charge_attack_sequence_OK () {
-        List<Ability> ability = new ArrayList<>();
-        ability.add(new Charge());
-
-        MinionCard minion1 = new MinionCard("Minion1", 2, 4, 6, ability);
+    public void Charge_addAbility_OK () {
+        MinionCard minion1 = new MinionCard("Minion1", 2, 4, 6);
         MinionCard minion2 = new MinionCard("Minion2", 3, 3, 3);
+        minion1.addAbility(new Charge());
         minion1.play();
         minion2.play();
 
@@ -90,6 +88,22 @@ public class MinionCardTest {
 
         assertTrue(minion1.getHealth() == 3);
         assertTrue(minion2.getHealth() == -1);
+    }
+
+    @Test
+    public void Charge_Windfury_DivineShield_ok() {
+        MinionCard minion1 = new MinionCard("Minion1", 2, 2, 4);
+        MinionCard minion2 = new MinionCard("Minion2", 3, 3, 3);
+        minion1.addAbility(new Charge());
+        minion1.addAbility(new Windfury());
+        minion2.addAbility(new DivineShield());
+        minion1.play();
+        minion2.play();
+
+        minion1.attack(minion2);
+
+        assertTrue(minion1.getHealth() == -2);
+        assertTrue(minion2.getHealth() == 1);
     }
 
 

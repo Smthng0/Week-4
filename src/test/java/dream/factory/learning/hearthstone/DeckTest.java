@@ -16,7 +16,6 @@ public class DeckTest {
     public void create_deck_OK() {
         Deck deck = createDeck();
 
-        assertTrue(deck.getBackingDeck().size() == 30);
         assertTrue(deck.getRemainingCards() == 30);
     }
 
@@ -28,7 +27,6 @@ public class DeckTest {
         assertTrue(deck.getRemainingCards() == 29);
         deck.drawCard();
         assertTrue(deck.getRemainingCards() == 28);
-        assertTrue(deck.getRemainingCards() == deck.getBackingDeck().size());
 
         for (int i = 0; i < 30; i++) {
             deck.drawCard();
