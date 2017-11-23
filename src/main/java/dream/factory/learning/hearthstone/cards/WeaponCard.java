@@ -7,6 +7,7 @@ import dream.factory.learning.hearthstone.abilities.Battlecry;
 import dream.factory.learning.hearthstone.abilities.Deathrattle;
 import dream.factory.learning.hearthstone.abilities.Windfury;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WeaponCard implements HearthstoneCard {
@@ -15,6 +16,14 @@ public class WeaponCard implements HearthstoneCard {
     private int attack;
     private int durability;
     private List<Ability> abilities;
+
+    public WeaponCard(String title, int manaCost, int attack, int durability){
+        this.title = title;
+        this.manaCost = manaCost;
+        this.attack = attack;
+        this.durability = durability;
+        this.abilities = new ArrayList<>();
+    }
 
     public WeaponCard(String title, int manaCost, int attack, int durability, List<Ability> abilities){
         this.title = title;

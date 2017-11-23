@@ -12,9 +12,9 @@ public class Deck {
     private List<HearthstoneCard> backingDeck = new ArrayList<>();
 
 
-    public Deck (List<HearthstoneCard> list) throws IllegalArgumentException {
+    public Deck (List<HearthstoneCard> list) {
         if (list.size() != 30){
-            throw new IllegalArgumentException("Deck must have 30 cards");
+            System.out.println("Must have 30 cards!");
         }
 
         backingDeck.addAll(list);
@@ -22,7 +22,7 @@ public class Deck {
     }
 
     public HearthstoneCard drawCard() {
-        if (remainingCards == 0){
+        if (this.isEmpty()){
             dmgCounter += 1;
             return null;
         }
@@ -32,20 +32,39 @@ public class Deck {
         return backingDeck.remove(0);
     }
 
+    public void addCard(HearthstoneCard card) {
+        backingDeck.add(card);
+        remainingCards++;
+        shuffleDeck();
+    }
+
     public boolean removeTargetCard(HearthstoneCard card) {
-        if ((remainingCards == 0)
-                || (!backingDeck.contains(card))) {
+        if ((this.isEmpty())
+                || (!searchCard(card))) {
+            return false;
+        } else {
+            backingDeck.remove(backingDeck.indexOf(card));
+            remainingCards--;
+            shuffleDeck();
+            return true;
+        }
+    }
+
+    public boolean removeFirstCard() {
+        if (this.isEmpty()) {
             return false;
         }
 
-        backingDeck.remove(backingDeck.indexOf(card));
+        backingDeck.remove(0);
         remainingCards--;
+        shuffleDeck();
         return true;
     }
 
     public boolean searchCard(String title) {
         for (HearthstoneCard card : backingDeck) {
             if (card.getTitle().equals(title)) {
+                shuffleDeck();
                 return true;
             }
         }
@@ -56,11 +75,16 @@ public class Deck {
     public boolean searchCard(HearthstoneCard targetCard) {
         for (HearthstoneCard card : backingDeck) {
             if (card.getTitle().equals(targetCard.getTitle())) {
+                shuffleDeck();
                 return true;
             }
         }
 
         return false;
+    }
+
+    public boolean isEmpty() {
+        return remainingCards == 0;
     }
 
     public void shuffleDeck() {

@@ -10,7 +10,7 @@ public class Board {
         Player tempPlayer = activePlayer;
         activePlayer = passivePlayer;
         passivePlayer = tempPlayer;
-        if (tempPlayer.getHand().numberOfCards > tempPlayer.getHand().limit) {
+        if (tempPlayer.getHand().getNumberOfCards() > tempPlayer.getHand().getLimit()) {
             tempPlayer.getHand().discardCard(0);
         }
     }

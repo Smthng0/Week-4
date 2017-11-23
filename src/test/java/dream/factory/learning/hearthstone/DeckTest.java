@@ -39,7 +39,7 @@ public class DeckTest {
     }
 
     @Test
-    public void searchDeck_byTitle_OK() {
+    public void searchCard_byTitle_OK() {
         Deck deck = createDeck();
 
         assertTrue(deck.searchCard("Minion29"));
@@ -48,6 +48,36 @@ public class DeckTest {
 
     }
 
+    @Test
+    public void addCard_searchCard_byCard_OK() {
+        Deck deck = createDeck();
+        MinionCard minion = new MinionCard("Vice", 2, 9, 4);
+        deck.addCard(minion);
+
+        assertTrue(deck.getRemainingCards() == 31);
+        assertTrue(deck.searchCard(minion));
+    }
+
+    @Test
+    public void removeCard_OK () {
+        Deck deck = createDeck();
+        MinionCard minion = new MinionCard("Vice", 2, 9, 4);
+        deck.addCard(minion);
+
+        assertTrue(deck.searchCard(minion));
+        assertTrue(deck.getRemainingCards() == 31);
+        assertTrue(deck.removeTargetCard(minion));
+        assertFalse(deck.searchCard(minion));
+        assertTrue(deck.removeFirstCard());
+        assertTrue(deck.getRemainingCards() == 29);
+
+        for (int i = 0; i < 29; i++) {
+            deck.removeFirstCard();
+        }
+
+        assertFalse(deck.removeTargetCard(minion));
+        assertFalse(deck.removeFirstCard());
+    }
 
     private Deck createDeck(){
         List<HearthstoneCard> arrayDeck = new ArrayList<>();
