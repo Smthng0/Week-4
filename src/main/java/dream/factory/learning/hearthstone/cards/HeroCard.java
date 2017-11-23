@@ -16,6 +16,11 @@ public class HeroCard implements HearthstoneCard {
     }
 
     @Override
+    public HearthstoneCard goToGraveyard() {
+        return null;
+    }
+
+    @Override
     public boolean hasAbility() {
         return abilities.size() > 0;
     }
@@ -27,11 +32,6 @@ public class HeroCard implements HearthstoneCard {
 
     public List<Ability> getAbilities() {
         return abilities;
-    }
-
-    @Override
-    public void removeFromPlay(){
-        this.goToGraveyard();
     }
 
     @Override

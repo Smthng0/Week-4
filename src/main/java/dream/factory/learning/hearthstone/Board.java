@@ -1,39 +1,56 @@
 package dream.factory.learning.hearthstone;
 
+import dream.factory.learning.hearthstone.cards.HearthstoneCard;
 import dream.factory.learning.hearthstone.cards.MinionCard;
 
-public class Board {
-    private static Player activePlayer;
-    private static Player passivePlayer;
+import java.util.ArrayList;
+import java.util.List;
 
-    public static void endTurn() {
-        Player tempPlayer = activePlayer;
-        activePlayer = passivePlayer;
-        passivePlayer = tempPlayer;
-        if (tempPlayer.getHand().getNumberOfCards() > tempPlayer.getHand().getLimit()) {
-            tempPlayer.getHand().discardCard(0);
+public class Board {
+    private int minionLimit = 7;
+    private List<MinionCard> backingBoard = new ArrayList<>();
+    private int numberOfMinions = 0;
+    private List<HearthstoneCard> graveyard = new ArrayList<>();
+
+    public void summonMinion(MinionCard card) {
+        if (isFull()){
+            System.out.println("Board is full");
+        } else {
+            backingBoard.add(card);
+            numberOfMinions++;
         }
     }
 
-    public static void startTurn() {
-        activePlayer.setManaPool(activePlayer.getManaPool()+1);
-        activePlayer.setRemainingMana(activePlayer.getManaPool());
-        activePlayer.setRemainingAttacks(activePlayer.getMaxAttacks());
+    public HearthstoneCard addToGraveyard(HearthstoneCard card){
+        graveyard.add(card);
+        return card = null;
     }
 
-    public static Attackable getTarget() {
-        //placeholder for getTarget
-        return new MinionCard("Minion", 2, 3, 4);
+    public MinionCard getAnyMinion(){
+        if (isEmpty()) {
+            return null;
+        } else {
+            return backingBoard.get(0);
+        }
     }
 
-    //board temporarely has everything static (need engine to do something)
-
-    public static Player getActivePlayer() {
-        return activePlayer;
+    private boolean isFull() {
+        return numberOfMinions == minionLimit;
     }
 
-    public static Player getPassivePlayer() {
-        return passivePlayer;
+    private boolean isEmpty() {
+        return numberOfMinions == 0;
     }
 
+    public List<MinionCard> getBoard() {
+        return backingBoard;
+    }
+
+    public int getNumberOfMinions() {
+        return numberOfMinions;
+    }
+
+    public List<HearthstoneCard> getGraveyard() {
+        return graveyard;
+    }
 }

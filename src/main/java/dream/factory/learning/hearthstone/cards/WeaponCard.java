@@ -1,6 +1,6 @@
 package dream.factory.learning.hearthstone.cards;
 
-import dream.factory.learning.hearthstone.Board;
+import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.Player;
 import dream.factory.learning.hearthstone.abilities.Ability;
 import dream.factory.learning.hearthstone.abilities.Battlecry;
@@ -35,7 +35,7 @@ public class WeaponCard implements HearthstoneCard {
 
     @Override
     public void play() {
-        Player player = Board.getActivePlayer();
+        Player player = Engine.getActivePlayer();
         player.setWeapon(this);
         player.setAttack(this.attack);
         player.setMaxAttacks(1);
@@ -53,15 +53,8 @@ public class WeaponCard implements HearthstoneCard {
     }
 
     @Override
-    public void removeFromPlay(){
-        this.goToGraveyard();
-
-        for (Ability ability : abilities) {
-            if (ability instanceof Deathrattle){
-                ability.effect();
-            }
-        }
-
+    public HearthstoneCard goToGraveyard() {
+        return null;
     }
 
     @Override

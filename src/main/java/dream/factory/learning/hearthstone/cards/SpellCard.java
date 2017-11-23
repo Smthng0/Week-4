@@ -22,6 +22,11 @@ public class SpellCard implements HearthstoneCard {
     }
 
     @Override
+    public HearthstoneCard goToGraveyard() {
+        return null;
+    }
+
+    @Override
     public boolean hasAbility() {
         return abilities.size() > 0;
     }
@@ -29,11 +34,6 @@ public class SpellCard implements HearthstoneCard {
     @Override
     public void addAbility(Ability ability) {
         this.abilities.add(ability);
-    }
-
-    @Override
-    public void removeFromPlay(){
-        this.goToGraveyard();
     }
 
     @Override

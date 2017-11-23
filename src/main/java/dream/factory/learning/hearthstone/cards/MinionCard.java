@@ -1,6 +1,7 @@
 package dream.factory.learning.hearthstone.cards;
 
 import dream.factory.learning.hearthstone.Attackable;
+import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.abilities.*;
 
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class MinionCard implements HearthstoneCard, Attackable {
         temporaryAbilities.addAll(originalAbilities);
         maxAttacks = 1;
         remainingAttacks = 0;
+    }
+
+    @Override
+    public HearthstoneCard goToGraveyard() {
+        return Engine.getActivePlayer().goToGraveyard(this);
     }
 
     @Override
@@ -130,17 +136,6 @@ public class MinionCard implements HearthstoneCard, Attackable {
     @Override
     public boolean hasAbility() {
         return temporaryAbilities.size() > 0;
-    }
-
-    @Override
-    public void removeFromPlay(){
-        this.goToGraveyard();
-
-        for (Ability ability : temporaryAbilities) {
-            if (ability instanceof Deathrattle){
-                ability.effect();
-            }
-        }
     }
 
     @Override

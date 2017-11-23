@@ -1,6 +1,7 @@
 package dream.factory.learning.hearthstone;
 
 import dream.factory.learning.hearthstone.abilities.Ability;
+import dream.factory.learning.hearthstone.cards.HearthstoneCard;
 import dream.factory.learning.hearthstone.cards.MinionCard;
 import dream.factory.learning.hearthstone.cards.WeaponCard;
 
@@ -17,11 +18,13 @@ public class Player implements Attackable {
     private WeaponCard weapon = null;
     private Deck deck;
     private Hand hand;
+    private Board board;
 
     public Player(String name, Deck deck, boolean playsFirst) {
         this.playerName = name;
         this.deck = deck;
-        this.hand = new Hand(deck, playsFirst);
+        this.board = new Board();
+        this.hand = new Hand(deck, playsFirst, this.board);
     }
 
     @Override
@@ -72,6 +75,10 @@ public class Player implements Attackable {
         } else if (this.armor >= damage){
             this.armor -= damage;
         }
+    }
+
+    public HearthstoneCard goToGraveyard(HearthstoneCard card){
+        return board.addToGraveyard(card);
     }
 
     @Override
@@ -166,6 +173,10 @@ public class Player implements Attackable {
 
     public Hand getHand() {
         return hand;
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
 }
