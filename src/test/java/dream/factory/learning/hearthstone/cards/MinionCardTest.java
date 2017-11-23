@@ -1,4 +1,4 @@
-package dream.factory.learning.hearthstone;
+package dream.factory.learning.hearthstone.cards;
 
 import dream.factory.learning.hearthstone.abilities.*;
 import dream.factory.learning.hearthstone.cards.MinionCard;

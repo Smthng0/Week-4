@@ -1,4 +1,4 @@
-package dream.factory.learning.hearthstone;
+package dream.factory.learning.hearthstone.readers;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AbilitiesList {
+public class AbilitiesReader {
 
     HashSet<String> allAbilities = new HashSet<>();
     HashSet<String> hasAbilities = new HashSet<>();
@@ -27,11 +27,11 @@ public class AbilitiesList {
         }
     }
 
-    public AbilitiesList() {
+    public AbilitiesReader() {
         this(null);
     }
 
-    public AbilitiesList(Collection list) {
+    public AbilitiesReader(Collection list) {
         if (list == null) {
             hasAbilities.clear();
         } else {
@@ -40,6 +40,7 @@ public class AbilitiesList {
     }
 
     //Tu cu napraviti liste ability-a po triggerima (comesIntoPlayAbility, triggerAbility, deathAbility...)
+    //mozda ovo bude korisno jednom.... -> vjerovatno nece bit
 
 
 }
