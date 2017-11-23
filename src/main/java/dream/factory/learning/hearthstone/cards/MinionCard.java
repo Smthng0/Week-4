@@ -15,38 +15,30 @@ public class MinionCard implements HearthstoneCard, Attackable {
     private int health;
     private int maxAttacks;
     private int remainingAttacks;
-    private List<Ability> abilities;
+    private List<Ability> temporaryAbilities;
+    private List<Ability> originalAbilities;
 
     public MinionCard(String title, int manaCost, int attack, int health){
         this.title = title;
         this.manaCost = manaCost;
         this.attack = attack;
         this.health = health;
-        this.abilities = new ArrayList<>();
+        this.originalAbilities = new ArrayList<>();
+        this.temporaryAbilities = new ArrayList<>();
     }
 
     public MinionCard(String title, int manaCost, int attack, int health, List<Ability> abilities){
         this (title, manaCost, attack, health);
-        this.abilities = abilities;
+        this.originalAbilities = abilities;
+        temporaryAbilities.addAll(originalAbilities);
     }
 
     @Override
     public void play() {
+        temporaryAbilities.clear();
+        temporaryAbilities.addAll(originalAbilities);
         maxAttacks = 1;
         remainingAttacks = 0;
-        sortAbilitiesReverse();
-
-        for (Ability ability : this.abilities) {
-            if (ability instanceof Windfury){
-                ability.effect();
-                maxAttacks = 2;
-            } else if (ability instanceof Charge){
-                ability.effect();
-                remainingAttacks = maxAttacks;
-            } else if (ability instanceof Battlecry){
-                ability.effect();
-            }
-        }
     }
 
     @Override
@@ -54,6 +46,16 @@ public class MinionCard implements HearthstoneCard, Attackable {
         if (target == null) {
             System.out.println("No target!");
         } else {
+            sortAbilitiesReverse();
+
+            if (getAbility("Windfury") != null){
+                maxAttacks = 2;
+            }
+
+            if (getAbility("Charge") != null){
+                remainingAttacks = maxAttacks;
+            }
+
             while (remainingAttacks > 0) {
                 target.defend(this);
 
@@ -76,14 +78,11 @@ public class MinionCard implements HearthstoneCard, Attackable {
         int tempHealth = this.health;
         this.health -= damage;
 
-        for (Ability ability : abilities) {
-            if (ability instanceof DivineShield){
-                DivineShield dummy = (DivineShield)ability;
-                if (!dummy.usedUp){
-                    this.health = tempHealth;
-                }
-                ability.effect();
-            }
+        if ((getAbility("DivineShield") != null)
+            && !((DivineShield)(getAbility("DivineShield")))
+                .isUsedUp()) {
+            getAbility("DivineShield").effect();
+            this.health = tempHealth;
         }
 
         //this will go to engine/board probably
@@ -92,39 +91,61 @@ public class MinionCard implements HearthstoneCard, Attackable {
         }
     }
 
-    public void suppressAbility(){
-        this.abilities.clear();
+    public Ability getAbility(Ability ability) {
+        for (Ability abilityIterator : temporaryAbilities) {
+            if (abilityIterator.getAbilityType()
+                    .equals(ability.getAbilityType())) {
+                return abilityIterator;
+            }
+        }
+
+        return null;
+    }
+
+    public Ability getAbility(String ability) {
+        for (Ability abilityIterator : temporaryAbilities) {
+            if (abilityIterator.getAbilityType()
+                    .equals(ability)) {
+                return abilityIterator;
+            }
+        }
+
+        return null;
     }
 
     @Override
-    public boolean isDead(){
-        return this.health <= 0;
+    public void addAbility(Ability ability) {
+        this.temporaryAbilities.add(ability);
+    }
+
+    public void sortAbilitiesReverse() {
+        temporaryAbilities.sort(Comparator.comparing(Ability::getAbilityType));
+        Collections.reverse(temporaryAbilities);
+    }
+
+    public void suppressAbility(){
+        this.temporaryAbilities.clear();
+    }
+
+    @Override
+    public boolean hasAbility() {
+        return temporaryAbilities.size() > 0;
     }
 
     @Override
     public void removeFromPlay(){
         this.goToGraveyard();
 
-        for (Ability ability : abilities) {
+        for (Ability ability : temporaryAbilities) {
             if (ability instanceof Deathrattle){
                 ability.effect();
             }
         }
     }
 
-    public void sortAbilitiesReverse() {
-        abilities.sort(Comparator.comparing(Ability::getAbilityType));
-        Collections.reverse(abilities);
-    }
-
     @Override
-    public boolean hasAbility() {
-        return abilities.size() > 0;
-    }
-
-    @Override
-    public void addAbility(Ability ability) {
-        this.abilities.add(ability);
+    public boolean isDead(){
+        return this.health <= 0;
     }
 
     @Override
@@ -174,6 +195,6 @@ public class MinionCard implements HearthstoneCard, Attackable {
     }
 
     public List<Ability> getAbilities() {
-        return abilities;
+        return temporaryAbilities;
     }
 }

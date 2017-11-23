@@ -8,6 +8,10 @@ public class DivineShield implements Ability {
         usedUp = true;
     }
 
+    public boolean isUsedUp() {
+        return usedUp;
+    }
+
     @Override
     public String getAbilityType() {
         return "DivineShield";
