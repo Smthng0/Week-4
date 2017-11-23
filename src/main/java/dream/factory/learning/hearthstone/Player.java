@@ -1,18 +1,22 @@
 package dream.factory.learning.hearthstone;
 
+import dream.factory.learning.hearthstone.abilities.Ability;
+import dream.factory.learning.hearthstone.cards.MinionCard;
+import dream.factory.learning.hearthstone.cards.WeaponCard;
+
 public class Player implements Attackable {
-    String playerName;
-    int attack = 0;
-    int armor = 0;
-    int maxAttacks = 0;
-    int remainingAttacks = 0;
-    int health = 30;
-    int manaPool = 0;
-    boolean hasWeapon = false;
-    Ability classAbility = null;
-    WeaponCard weapon = null;
-    Deck deck;
-    Hand hand;
+    private String playerName;
+    private int attack = 0;
+    private int armor = 0;
+    private int maxAttacks = 0;
+    private int remainingAttacks = 0;
+    private int health = 30;
+    private int manaPool = 0;
+    private int remainingMana = 0;
+    private Ability classAbility = null;
+    private WeaponCard weapon = null;
+    private Deck deck;
+    private Hand hand;
 
     public Player(String name, Deck deck, boolean playsFirst) {
         this.playerName = name;
@@ -22,24 +26,21 @@ public class Player implements Attackable {
 
     @Override
     public void attack(Attackable target) {
-        if (hasWeapon){
-
+        if (this.hasWeapon()){
             if (target == null) {
                 System.out.println("No target!");
             } else {
                 while (remainingAttacks > 0) {
-
-                    //the defend part will go to board/engine once it's implemented
                     target.defend(this);
 
-                    if (target instanceof AbstractMinionCard) {
+                    if (target instanceof MinionCard) {
                         this.takeDamage(target.getAttack());
                     }
 
                     remainingAttacks--;
-                    weapon.durability--;
+                    weapon.setDurability(weapon.getDurability()-1);
 
-                    if (weapon.durability == 0){
+                    if (weapon.getDurability() == 0){
                         weapon.removeFromPlay();
                         weapon = null;
                         remainingAttacks = 0;
@@ -47,7 +48,6 @@ public class Player implements Attackable {
                     }
                 }
             }
-
         } else {
             System.out.println("No weapon!");
         }
@@ -65,7 +65,6 @@ public class Player implements Attackable {
 
     @Override
     public void takeDamage(int damage){
-
         if (this.armor < damage) {
             damage -= this.armor;
             this.armor = 0;
@@ -73,7 +72,6 @@ public class Player implements Attackable {
         } else if (this.armor >= damage){
             this.armor -= damage;
         }
-
     }
 
     @Override
@@ -82,17 +80,92 @@ public class Player implements Attackable {
     }
 
     @Override
-    public void suppressAbility(){
-        this.weapon.abilities = null;
-    }
-
-    public void supressClassAbility(){
-        this.classAbility = null;
-    }
-
-    @Override
     public boolean isDead() {
         return this.health <= 0;
+    }
+
+    public boolean hasWeapon() {
+        return weapon != null;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
+
+    public int getMaxAttacks() {
+        return maxAttacks;
+    }
+
+    public void setMaxAttacks(int maxAttacks) {
+        this.maxAttacks = maxAttacks;
+    }
+
+    public int getRemainingAttacks() {
+        return remainingAttacks;
+    }
+
+    public void setRemainingAttacks(int remainingAttacks) {
+        this.remainingAttacks = remainingAttacks;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getManaPool() {
+        return manaPool;
+    }
+
+    public void setManaPool(int manaPool) {
+        this.manaPool = manaPool;
+    }
+
+    public int getRemainingMana() {
+        return remainingMana;
+    }
+
+    public void setRemainingMana(int remainingMana) {
+        this.remainingMana = remainingMana;
+    }
+
+    public Ability getClassAbility() {
+        return classAbility;
+    }
+
+    public void setClassAbility(Ability classAbility) {
+        this.classAbility = classAbility;
+    }
+
+    public WeaponCard getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(WeaponCard weapon) {
+        this.weapon = weapon;
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 
 }

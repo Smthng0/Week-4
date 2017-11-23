@@ -1,14 +1,15 @@
 package dream.factory.learning.hearthstone;
 
+import dream.factory.learning.hearthstone.cards.HearthstoneCard;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    int remainingCards = 30;
-    int dmgCounter = 0;
-    HearthstoneCard noCards = null;
-    List<HearthstoneCard> deck = new ArrayList<>();
+    private int remainingCards = 30;
+    private int dmgCounter = 0;
+    private List<HearthstoneCard> backingDeck = new ArrayList<>();
 
 
     public Deck (List<HearthstoneCard> list) throws IllegalArgumentException {
@@ -16,37 +17,34 @@ public class Deck {
             throw new IllegalArgumentException("Deck must have 30 cards");
         }
 
-        deck.addAll(list);
-        Collections.shuffle(deck);
+        backingDeck.addAll(list);
+        Collections.shuffle(backingDeck);
     }
 
     public HearthstoneCard drawCard() {
         if (remainingCards == 0){
             dmgCounter += 1;
-            return noCards;
+            return null;
         }
 
         remainingCards--;
 
-        return deck.remove(0);
+        return backingDeck.remove(0);
     }
 
-    public HearthstoneCard removeTargetCard(HearthstoneCard card) {
+    public boolean removeTargetCard(HearthstoneCard card) {
         if ((remainingCards == 0)
-                || (!deck.contains(card))) {
-            return noCards;
+                || (!backingDeck.contains(card))) {
+            return false;
         }
 
+        backingDeck.remove(backingDeck.indexOf(card));
         remainingCards--;
-        return deck.remove(deck.indexOf(card));
-    }
-
-    public void shuffleDeck() {
-        Collections.shuffle(deck);
+        return true;
     }
 
     public boolean searchCard(String title) {
-        for (HearthstoneCard card : deck) {
+        for (HearthstoneCard card : backingDeck) {
             if (card.getTitle().equals(title)) {
                 return true;
             }
@@ -55,9 +53,9 @@ public class Deck {
         return false;
     }
 
-    public boolean searchCard(HearthstoneCard card) {
-        for (HearthstoneCard searchCard : deck) {
-            if (searchCard.getTitle().equals(card.getTitle())) {
+    public boolean searchCard(HearthstoneCard targetCard) {
+        for (HearthstoneCard card : backingDeck) {
+            if (card.getTitle().equals(targetCard.getTitle())) {
                 return true;
             }
         }
@@ -65,5 +63,19 @@ public class Deck {
         return false;
     }
 
+    public void shuffleDeck() {
+        Collections.shuffle(backingDeck);
+    }
 
+    public int getRemainingCards() {
+        return remainingCards;
+    }
+
+    public int getDmgCounter() {
+        return dmgCounter;
+    }
+
+    public List<HearthstoneCard> getBackingDeck() {
+        return backingDeck;
+    }
 }

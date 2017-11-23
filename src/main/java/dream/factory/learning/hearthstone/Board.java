@@ -1,35 +1,39 @@
 package dream.factory.learning.hearthstone;
 
-import dream.factory.learning.hearthstone.abilities.Charge;
-
-import java.util.ArrayList;
+import dream.factory.learning.hearthstone.cards.MinionCard;
 
 public class Board {
-    static Player activePlayer;
-    static Player passivePlayer;
-
-    public static Player getActivePlayer() {
-        return activePlayer;
-    }
+    private static Player activePlayer;
+    private static Player passivePlayer;
 
     public static void endTurn() {
         Player tempPlayer = activePlayer;
         activePlayer = passivePlayer;
         passivePlayer = tempPlayer;
-        if (tempPlayer.hand.numberOfCards > tempPlayer.hand.limit) {
-            tempPlayer.hand.discardCard(0);
+        if (tempPlayer.getHand().numberOfCards > tempPlayer.getHand().limit) {
+            tempPlayer.getHand().discardCard(0);
         }
     }
 
     public static void startTurn() {
-        activePlayer.manaPool += 1;
-        activePlayer.remainingAttacks = activePlayer.maxAttacks;
+        activePlayer.setManaPool(activePlayer.getManaPool()+1);
+        activePlayer.setRemainingMana(activePlayer.getManaPool());
+        activePlayer.setRemainingAttacks(activePlayer.getMaxAttacks());
     }
 
     public static Attackable getTarget() {
         //placeholder for getTarget
-        return new MinionCard("Minion", 2, 3, 4, null);
+        return new MinionCard("Minion", 2, 3, 4);
     }
 
     //board temporarely has everything static (need engine to do something)
+
+    public static Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    public static Player getPassivePlayer() {
+        return passivePlayer;
+    }
+
 }

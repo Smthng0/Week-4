@@ -1,4 +1,6 @@
-package dream.factory.learning.hearthstone;
+package dream.factory.learning.hearthstone.cards;
+
+import dream.factory.learning.hearthstone.abilities.Ability;
 
 public interface HearthstoneCard {
 
@@ -9,6 +11,10 @@ public interface HearthstoneCard {
         System.out.println("NYI goToGraveyard");
         return this;
     }
+
+    boolean hasAbility();
+
+    void addAbility(Ability ability);
 
     void removeFromPlay();
 

@@ -1,8 +1,7 @@
 package dream.factory.learning.hearthstone;
 
-import dream.factory.learning.hearthstone.abilities.Charge;
-import dream.factory.learning.hearthstone.abilities.DivineShield;
-import dream.factory.learning.hearthstone.abilities.Windfury;
+import dream.factory.learning.hearthstone.abilities.*;
+import dream.factory.learning.hearthstone.cards.MinionCard;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,18 +14,17 @@ public class MinionCardTest {
     @Test
     public void create_minion_OK() {
         List<Ability> ability = new ArrayList<>();
+        ability.add(new Deathrattle());
         MinionCard minion = new MinionCard("Minion1", 8, 17, 4);
         MinionCard minionWithAbility = new MinionCard("Minion1", 8, 5, 8, ability);
 
-        assertTrue((minion.title.equals("Minion1"))
-                &&(minion.manaCost == 8)
-                &&(minion.attack == 17)
-                &&(minion.health == 4)
-                &&(!minion.hasAbilities)
-                &&(minion.abilities == null));
-        assertTrue((minionWithAbility.health == 8)
-                &&(minionWithAbility.hasAbilities)
-                &&(minionWithAbility.abilities != null));
+        assertTrue((minion.getTitle().equals("Minion1"))
+                &&(minion.getManaCost() == 8)
+                &&(minion.getAttack() == 17)
+                &&(minion.getHealth() == 4)
+                &&(minion.getAbilities().size() == 0));
+        assertTrue((minionWithAbility.getHealth() == 8)
+                &&(minionWithAbility.getAbilities().size() > 0));
     }
 
     @Test
@@ -36,11 +34,11 @@ public class MinionCardTest {
         minion1.play();
         minion2.play();
 
-        minion1.remainingAttacks = minion1.maxAttacks;
+        minion1.setRemainingAttacks(minion1.getMaxAttacks());
         minion1.attack(minion2);
 
-        assertTrue(minion1.health == 2);
-        assertTrue(minion2.health == 1);
+        assertTrue(minion1.getHealth() == 2);
+        assertTrue(minion2.getHealth() == 1);
     }
 
     @Test
@@ -53,11 +51,11 @@ public class MinionCardTest {
         minion1.play();
         minion2.play();
 
-        minion1.remainingAttacks = minion1.maxAttacks;
+        minion1.setRemainingAttacks(minion1.getMaxAttacks());
         minion1.attack(minion2);
 
-        assertTrue(minion1.health == 2);
-        assertTrue(minion2.health == -1);
+        assertTrue(minion1.getHealth() == 2);
+        assertTrue(minion2.getHealth() == -1);
 
     }
 
@@ -71,11 +69,11 @@ public class MinionCardTest {
         minion1.play();
         minion2.play();
 
-        minion1.remainingAttacks = minion1.maxAttacks;
+        minion1.setRemainingAttacks(minion1.getMaxAttacks());
         minion1.attack(minion2);
 
-        assertTrue(minion1.health == 3);
-        assertTrue(minion2.health == 3);
+        assertTrue(minion1.getHealth() == 3);
+        assertTrue(minion2.getHealth() == 3);
     }
 
     @Test
@@ -90,8 +88,9 @@ public class MinionCardTest {
 
         minion1.attack(minion2);
 
-        assertTrue(minion1.health == 3);
-        assertTrue(minion2.health == -1);
+        assertTrue(minion1.getHealth() == 3);
+        assertTrue(minion2.getHealth() == -1);
     }
+
 
 }
