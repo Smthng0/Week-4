@@ -1,6 +1,10 @@
 package dream.factory.learning.hearthstone.cards;
 
 import dream.factory.learning.hearthstone.abilities.*;
+import dream.factory.learning.hearthstone.abilities.keywords.Charge;
+import dream.factory.learning.hearthstone.abilities.keywords.Deathrattle;
+import dream.factory.learning.hearthstone.abilities.keywords.DivineShield;
+import dream.factory.learning.hearthstone.abilities.keywords.Windfury;
 import org.junit.Test;
 
 import java.util.ArrayList;

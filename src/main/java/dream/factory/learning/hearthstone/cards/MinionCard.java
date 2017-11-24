@@ -1,8 +1,8 @@
 package dream.factory.learning.hearthstone.cards;
 
 import dream.factory.learning.hearthstone.Attackable;
-import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.abilities.*;
+import dream.factory.learning.hearthstone.abilities.keywords.DivineShield;
 
 import java.util.ArrayList;
 import java.util.Collections;

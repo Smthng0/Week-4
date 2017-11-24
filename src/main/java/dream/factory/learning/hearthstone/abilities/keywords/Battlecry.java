@@ -1,4 +1,6 @@
-package dream.factory.learning.hearthstone.abilities;
+package dream.factory.learning.hearthstone.abilities.keywords;
+
+import dream.factory.learning.hearthstone.abilities.Ability;
 
 public class Battlecry implements Ability {
 

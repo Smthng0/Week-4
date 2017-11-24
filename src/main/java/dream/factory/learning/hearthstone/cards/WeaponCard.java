@@ -3,9 +3,8 @@ package dream.factory.learning.hearthstone.cards;
 import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.Player;
 import dream.factory.learning.hearthstone.abilities.Ability;
-import dream.factory.learning.hearthstone.abilities.Battlecry;
-import dream.factory.learning.hearthstone.abilities.Deathrattle;
-import dream.factory.learning.hearthstone.abilities.Windfury;
+import dream.factory.learning.hearthstone.abilities.keywords.Battlecry;
+import dream.factory.learning.hearthstone.abilities.keywords.Windfury;
 
 import java.util.ArrayList;
 import java.util.List;

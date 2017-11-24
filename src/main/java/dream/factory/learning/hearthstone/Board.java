@@ -33,6 +33,14 @@ public class Board {
         }
     }
 
+    public List<MinionCard> getAllMinions() {
+        if (isEmpty()){
+            return null;
+        }
+
+        return backingBoard;
+    }
+
     public void returnToHand(HearthstoneCard card){
         Engine.getActivePlayer().getHand().addCard(card);
         card = null;

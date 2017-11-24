@@ -10,6 +10,10 @@ public class Engine {
         activePlayer.setManaPool(activePlayer.getManaPool()+1);
         activePlayer.setRemainingMana(activePlayer.getManaPool());
         activePlayer.setRemainingAttacks(activePlayer.getMaxAttacks());
+
+        for (MinionCard minion : activePlayer.getBoard().getAllMinions()) {
+            minion.setRemainingAttacks(minion.getMaxAttacks());
+        }
     }
 
     public static void endTurn() {

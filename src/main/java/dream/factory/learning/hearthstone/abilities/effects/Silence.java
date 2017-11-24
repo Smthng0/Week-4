@@ -1,12 +1,14 @@
-package dream.factory.learning.hearthstone.abilities;
+package dream.factory.learning.hearthstone.abilities.effects;
 
 import dream.factory.learning.hearthstone.Engine;
+import dream.factory.learning.hearthstone.abilities.Ability;
 import dream.factory.learning.hearthstone.cards.MinionCard;
+import dream.factory.learning.hearthstone.cards.SpellCard;
 
-public class Silence implements Ability {
+public interface Silence  extends Ability {
 
     @Override
-    public void effect() {
+    default void effect() {
         if (Engine.getAttackTarget() instanceof MinionCard){
             ((MinionCard)(Engine.getAttackTarget())).suppressAbility();
         } else {
@@ -15,7 +17,7 @@ public class Silence implements Ability {
     }
 
     @Override
-    public String getAbilityType() {
+    default String getAbilityType() {
         return "Silence";
     }
 
