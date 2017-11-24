@@ -171,8 +171,49 @@ public class Player implements Attackable {
         this.weapon = weapon;
     }
 
-    public Hand getHand() {
-        return hand;
+    public boolean fullHand() {
+        return (hand.getNumberOfCards() >= hand.getLimit());
+    }
+
+    public void addCard(HearthstoneCard card) {
+        hand.addCard(card);
+    }
+
+    public void discardCard(HearthstoneCard card) {
+        hand.discardCard(card);
+    }
+
+    public void drawCard() {
+        hand.drawCard();
+    }
+
+    public boolean playCard(HearthstoneCard card) {
+        if (card.getManaCost() > remainingMana){
+            return false;
+        }
+
+        remainingMana -= card.getManaCost();
+        hand.playCard(card);
+
+        return true;
+    }
+
+    private void viewHand() {
+        for (HearthstoneCard card : hand.getBackingHand()) {
+            System.out.println(card.getTitle());  //ovo malo bolje!
+        }
+    }
+
+    public void discardCard(int index) {
+        hand.discardCard(index);
+    }
+
+    public int getNumberOfCards () {
+        return hand.getNumberOfCards();
+    }
+
+    public int getCardLimit () {
+        return hand.getLimit();
     }
 
     public Board getBoard() {

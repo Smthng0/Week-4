@@ -42,7 +42,7 @@ public class Board {
     }
 
     public void returnToHand(HearthstoneCard card){
-        Engine.getActivePlayer().getHand().addCard(card);
+        Engine.getFriendlyPlayer().addCard(card);
         card = null;
     }
 

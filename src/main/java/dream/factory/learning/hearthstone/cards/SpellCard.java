@@ -28,7 +28,7 @@ public class SpellCard implements HearthstoneCard {
 
     @Override
     public void goToGraveyard() {
-        Engine.getActivePlayer().goToGraveyard(this);
+        Engine.getFriendlyPlayer().goToGraveyard(this);
     }
 
     @Override
@@ -50,6 +50,7 @@ public class SpellCard implements HearthstoneCard {
         return abilities;
     }
 
+    @Override
     public int getManaCost() {
         return manaCost;
     }

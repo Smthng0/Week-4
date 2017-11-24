@@ -16,30 +16,33 @@ public class MinionCard implements HearthstoneCard, Attackable {
     private int health;
     private int maxAttacks;
     private int remainingAttacks;
-    private List<Ability> temporaryAbilities;
-    private List<Ability> originalAbilities;
+    private List<Ability> abilities;
 
     public MinionCard(String title, int manaCost, int attack, int health){
         this.title = title;
         this.manaCost = manaCost;
         this.attack = attack;
         this.health = health;
-        this.originalAbilities = new ArrayList<>();
-        this.temporaryAbilities = new ArrayList<>();
+        this.abilities = new ArrayList<>();
     }
 
     public MinionCard(String title, int manaCost, int attack, int health, List<Ability> abilities){
         this (title, manaCost, attack, health);
-        this.originalAbilities = abilities;
-        temporaryAbilities.addAll(originalAbilities);
+        this.abilities = abilities;
     }
 
     @Override
     public void play() {
-        temporaryAbilities.clear();
-        temporaryAbilities.addAll(originalAbilities);
         maxAttacks = 1;
         remainingAttacks = 0;
+
+        if (getAbility("Windfury") != null){
+            maxAttacks = 2;
+        }
+
+        if (getAbility("Charge") != null){
+            remainingAttacks = maxAttacks;
+        }
     }
 
     @Override
@@ -47,16 +50,6 @@ public class MinionCard implements HearthstoneCard, Attackable {
         if (target == null) {
             System.out.println("No target!");
         } else {
-            sortAbilitiesReverse();
-
-            if (getAbility("Windfury") != null){
-                maxAttacks = 2;
-            }
-
-            if (getAbility("Charge") != null){
-                remainingAttacks = maxAttacks;
-            }
-
             while (remainingAttacks > 0) {
                 target.defend(this);
 
@@ -92,7 +85,7 @@ public class MinionCard implements HearthstoneCard, Attackable {
     }
 
     public Ability getAbility(Ability ability) {
-        for (Ability abilityIterator : temporaryAbilities) {
+        for (Ability abilityIterator : abilities) {
             if (abilityIterator.getAbilityType()
                     .equals(ability.getAbilityType())) {
                 return abilityIterator;
@@ -103,7 +96,7 @@ public class MinionCard implements HearthstoneCard, Attackable {
     }
 
     public Ability getAbility(String ability) {
-        for (Ability abilityIterator : temporaryAbilities) {
+        for (Ability abilityIterator : abilities) {
             if (abilityIterator.getAbilityType()
                     .equals(ability)) {
                 return abilityIterator;
@@ -113,23 +106,27 @@ public class MinionCard implements HearthstoneCard, Attackable {
         return null;
     }
 
+    public List<Ability> getAbilities() {
+        return abilities;
+    }
+
     @Override
     public void addAbility(Ability ability) {
-        this.temporaryAbilities.add(ability);
+        this.abilities.add(ability);
     }
 
     public void sortAbilitiesReverse() {
-        temporaryAbilities.sort(Comparator.comparing(Ability::getAbilityType));
-        Collections.reverse(temporaryAbilities);
+        abilities.sort(Comparator.comparing(Ability::getAbilityType));
+        Collections.reverse(abilities);
     }
 
     public void suppressAbility(){
-        this.temporaryAbilities.clear();
+        this.abilities.clear();
     }
 
     @Override
     public boolean hasAbility() {
-        return temporaryAbilities.size() > 0;
+        return abilities.size() > 0;
     }
 
     @Override
@@ -156,6 +153,7 @@ public class MinionCard implements HearthstoneCard, Attackable {
         return this.attack;
     }
 
+    @Override
     public int getManaCost() {
         return manaCost;
     }
@@ -192,7 +190,5 @@ public class MinionCard implements HearthstoneCard, Attackable {
         this.remainingAttacks = remainingAttacks;
     }
 
-    public List<Ability> getAbilities() {
-        return temporaryAbilities;
-    }
+
 }

@@ -34,7 +34,7 @@ public class WeaponCard implements HearthstoneCard {
 
     @Override
     public void play() {
-        Player player = Engine.getActivePlayer();
+        Player player = Engine.getFriendlyPlayer();
         player.setWeapon(this);
         player.setAttack(this.attack);
         player.setMaxAttacks(1);
@@ -68,7 +68,7 @@ public class WeaponCard implements HearthstoneCard {
             this.getAbility("Deathrattle").effect();
         }
 
-        Engine.getActivePlayer().goToGraveyard(this);
+        Engine.getFriendlyPlayer().goToGraveyard(this);
     }
 
     @Override
@@ -86,6 +86,7 @@ public class WeaponCard implements HearthstoneCard {
         return title;
     }
 
+    @Override
     public int getManaCost() {
         return manaCost;
     }

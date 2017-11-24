@@ -10,6 +10,8 @@ public interface HearthstoneCard {
 
     boolean hasAbility();
 
+    int getManaCost();
+
     void addAbility(Ability ability);
 
     default void removeFromPlay() {

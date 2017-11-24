@@ -18,7 +18,7 @@ public class HeroCard implements HearthstoneCard {
 
     @Override
     public void goToGraveyard() {
-        Engine.getActivePlayer().goToGraveyard(this);
+        Engine.getFriendlyPlayer().goToGraveyard(this);
     }
 
     @Override
@@ -40,6 +40,7 @@ public class HeroCard implements HearthstoneCard {
         return title;
     }
 
+    @Override
     public int getManaCost() {
         return manaCost;
     }
