@@ -143,7 +143,7 @@ public class MinionCard implements HearthstoneCard, Attackable {
             this.getAbility("Deathrattle").effect();
         }
 
-        Engine.getActivePlayer().goToGraveyard(this);
+        System.out.println("Go to this players graveyard");
     }
 
     @Override
