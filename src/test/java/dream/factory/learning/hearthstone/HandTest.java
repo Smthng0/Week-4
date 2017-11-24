@@ -61,20 +61,32 @@ public class HandTest {
         Hand hand = createHand();
         MinionCard card = new MinionCard("Vice", 3, 4, 2);
         hand.addCard(card);
+        hand.addCard(card);
+
+        assertTrue(hand.getNumberOfCards() == 6);
+
+        hand.discardCard(card);
 
         assertTrue(hand.getNumberOfCards() == 5);
 
         hand.discardCard(card);
 
         assertTrue(hand.getNumberOfCards() == 4);
-
-        hand.discardCard(0);
-
-        assertTrue(hand.getNumberOfCards() == 3);
     }
 
     @Test
     public void playCard_OK() {
+        Hand hand = createHand();
+        MinionCard card = new MinionCard("Vice", 3, 4, 2);
+        hand.addCard(card);
+        hand.addCard(card);
+
+        assertTrue(hand.getNumberOfCards() == 6);
+
+        hand.playCard(card);
+        hand.playCard(card);
+
+        assertTrue(hand.getNumberOfCards() == 4);
     }
 
     @Test
