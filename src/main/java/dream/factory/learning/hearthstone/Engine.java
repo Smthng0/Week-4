@@ -27,6 +27,12 @@ public class Engine {
     }
 
     public static Attackable getAttackTarget() {
+        for (MinionCard minion : passivePlayer.getBoard().getAllMinions()) {
+            if (minion.getAbility("Taunt") != null) {
+                return minion;
+            }
+        }
+
         return passivePlayer.getBoard().getAnyMinion();
     }
 

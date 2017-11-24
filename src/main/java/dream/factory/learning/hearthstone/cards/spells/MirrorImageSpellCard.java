@@ -2,6 +2,7 @@ package dream.factory.learning.hearthstone.cards.spells;
 
 import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.abilities.Ability;
+import dream.factory.learning.hearthstone.abilities.keywords.Taunt;
 import dream.factory.learning.hearthstone.cards.MinionCard;
 import dream.factory.learning.hearthstone.cards.SpellCard;
 
@@ -16,11 +17,13 @@ public class MirrorImageSpellCard extends SpellCard {
         this.addAbility(new Ability() {
             @Override
             public void effect() {
-                //need to add taunt
+                List<Ability> taunt = new ArrayList<>();
+                taunt.add(new Taunt());
+
                 Engine.getActivePlayer().getBoard().summonMinion
-                        (new MinionCard("Mirror Image", 0, 0, 2));
+                        (new MinionCard("Mirror Image", 0, 0, 2, taunt));
                 Engine.getActivePlayer().getBoard().summonMinion
-                        (new MinionCard("Mirror Image", 0, 0, 2));
+                        (new MinionCard("Mirror Image", 0, 0, 2, taunt));
             }
 
             @Override
