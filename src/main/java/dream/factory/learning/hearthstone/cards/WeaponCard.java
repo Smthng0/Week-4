@@ -29,7 +29,10 @@ public class WeaponCard implements HearthstoneCard {
         this.manaCost = manaCost;
         this.attack = attack;
         this.durability = durability;
-        this.abilities = abilities;
+        this.abilities = new ArrayList<>();
+        if (abilities != null){
+            this.abilities.addAll(abilities);
+        }
     }
 
     @Override

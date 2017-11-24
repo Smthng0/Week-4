@@ -3,6 +3,7 @@ package dream.factory.learning.hearthstone.cards;
 import dream.factory.learning.hearthstone.Engine;
 import dream.factory.learning.hearthstone.abilities.Ability;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpellCard implements HearthstoneCard {
@@ -14,7 +15,10 @@ public class SpellCard implements HearthstoneCard {
         super();
         this.title = title;
         this.manaCost = manaCost;
-        this.abilities = abilities;
+        this.abilities = new ArrayList<>();
+        if (abilities != null){
+            this.abilities.addAll(abilities);
+        }
     }
 
     @Override

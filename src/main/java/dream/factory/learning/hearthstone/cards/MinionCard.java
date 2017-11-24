@@ -28,7 +28,10 @@ public class MinionCard implements HearthstoneCard, Attackable {
 
     public MinionCard(String title, int manaCost, int attack, int health, List<Ability> abilities){
         this (title, manaCost, attack, health);
-        this.abilities = abilities;
+        this.abilities = new ArrayList<>();
+        if (abilities != null){
+            this.abilities.addAll(abilities);
+        }
     }
 
     @Override
