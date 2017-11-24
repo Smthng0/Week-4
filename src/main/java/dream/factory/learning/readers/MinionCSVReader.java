@@ -1,6 +1,5 @@
-package dream.factory.learning.hearthstone.readers;
+package dream.factory.learning.readers;
 
-import dream.factory.learning.hearthstone.cards.HearthstoneCard;
 import dream.factory.learning.hearthstone.cards.MinionCard;
 
 import java.io.BufferedReader;

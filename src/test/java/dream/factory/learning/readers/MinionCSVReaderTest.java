@@ -1,13 +1,10 @@
-package dream.factory.learning.hearthstone.readers;
+package dream.factory.learning.readers;
 
 import dream.factory.learning.hearthstone.cards.HearthstoneCard;
 import dream.factory.learning.hearthstone.cards.MinionCard;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class MinionCSVReaderTest {
     @Test

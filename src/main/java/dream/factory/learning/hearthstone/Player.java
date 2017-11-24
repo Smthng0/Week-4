@@ -199,9 +199,7 @@ public class Player implements Attackable {
     }
 
     private void viewHand() {
-        for (HearthstoneCard card : hand.getBackingHand()) {
-            System.out.println(card.getTitle());  //ovo malo bolje!
-        }
+        hand.viewHand();
     }
 
     public void discardCard(int index) {

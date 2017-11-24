@@ -30,7 +30,7 @@ public class WeaponCardTest {
     }
 
     @Test
-    public void play_OK() {
+    public void play_NYI() {
         //need to wait for the engine with "friendly player"
     }
 

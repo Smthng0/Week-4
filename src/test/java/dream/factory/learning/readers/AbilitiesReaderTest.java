@@ -1,6 +1,5 @@
-package dream.factory.learning.hearthstone.readers;
+package dream.factory.learning.readers;
 
-import dream.factory.learning.hearthstone.readers.AbilitiesReader;
 import org.junit.Test;
 
 import java.io.IOException;

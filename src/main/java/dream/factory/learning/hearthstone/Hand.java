@@ -10,12 +10,12 @@ import java.util.List;
 public class Hand {
     private int numberOfCards = 0;
     private int limit = 10;
-    private List<HearthstoneCard> backingHand = new ArrayList<>(limit);
+    private List<HearthstoneCard> backingHand;
     private Deck deck = null;
     private Board board = null;
 
     public Hand (Deck deck, boolean playsFirst, Board board){
-        backingHand = null;
+        backingHand = new ArrayList<>();
         this.deck = deck;
         this.board = board;
 
@@ -68,16 +68,18 @@ public class Hand {
         numberOfCards--;
     }
 
+    public void viewHand() {
+        for (HearthstoneCard card : backingHand) {
+            System.out.println(card.getTitle());
+        }
+    }
+
     public boolean hasCards(){
         return this.numberOfCards > 0;
     }
 
     public int getNumberOfCards() {
         return numberOfCards;
-    }
-
-    public List<HearthstoneCard> getBackingHand() {
-        return backingHand;
     }
 
     public int getLimit() {

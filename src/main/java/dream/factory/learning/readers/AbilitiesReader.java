@@ -1,4 +1,4 @@
-package dream.factory.learning.hearthstone.readers;
+package dream.factory.learning.readers;
 
 import java.io.IOException;
 import java.nio.file.Files;

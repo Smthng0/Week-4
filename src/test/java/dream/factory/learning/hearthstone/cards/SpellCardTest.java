@@ -28,12 +28,12 @@ public class SpellCardTest {
     }
 
     @Test
-    public void play() {
+    public void play_NYI() {
         //gona test when engine is done
     }
 
     @Test
-    public void addAbility() {
+    public void addAbility_OK() {
         SpellCard spellCard = new SpellCard("The Coin", 0, null);
 
         assertFalse(spellCard.hasAbility());

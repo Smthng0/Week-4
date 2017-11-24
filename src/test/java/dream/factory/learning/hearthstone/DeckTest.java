@@ -77,7 +77,7 @@ public class DeckTest {
         assertFalse(deck.removeFirstCard());
     }
 
-    private Deck createDeck(){
+    public static Deck createDeck(){
         List<HearthstoneCard> arrayDeck = new ArrayList<>();
         Random random = new Random ();
 
