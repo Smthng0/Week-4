@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Vice",
+    "mana_cost": 5,
+    "attack": 7,
+    "health": 4,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Frane",
+    "mana_cost": 2,
+    "attack": 4,
+    "health": 6,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Zec",
+    "mana_cost": 6,
+    "attack": 6,
+    "health": 3,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Marin",
+    "mana_cost": 9,
+    "attack": 3,
+    "health": 9,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Mario",
+    "mana_cost": 4,
+    "attack": 8,
+    "health": 2,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Muco",
+    "mana_cost": 8,
+    "attack": 3,
+    "health": 10,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Minion1",
+    "mana_cost": 10,
+    "attack": 10,
+    "health": 8,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Minion2",
+    "mana_cost": 1,
+    "attack": 25,
+    "health": 1,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Minion3",
+    "mana_cost": 7,
+    "attack": 1,
+    "health": 5,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  },
+  {
+    "title": "Minion4",
+    "mana_cost": 3,
+    "attack": 0,
+    "health": 7,
+    "max_attacks": 0,
+    "remaining_attacks": 0,
+    "abilities": []
+  }
+]

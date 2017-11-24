@@ -11,6 +11,13 @@ public class HeroCard implements HearthstoneCard {
     private int armor;
     private List<Ability> abilities;
 
+
+    /**
+     * for now this is not needed... will make something differet here
+     * when the time comes to make something my own...
+     * and not a hearthstone import :D
+     */
+
     @Override
     public void play() {
         //do ability
@@ -56,4 +63,5 @@ public class HeroCard implements HearthstoneCard {
     public void setArmor(int armor) {
         this.armor = armor;
     }
+
 }

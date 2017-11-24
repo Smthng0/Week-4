@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MinionCSVReader {
 
-    public static void main(String[] args) {
+    public static List<MinionCard> createMinionListFromTxt() {
 
         List<MinionCard> minionList = new ArrayList<>();
         String minionFile = "Minions.csv";
@@ -23,9 +23,9 @@ public class MinionCSVReader {
                 String[] minion = line.split(csvSplit);
 
                 minionList.add(new MinionCard(minion[0],
-                        Integer.parseInt(minion[1]),
-                        Integer.parseInt(minion[2]),
-                        Integer.parseInt(minion[3])
+                                Integer.parseInt(minion[1]),
+                                Integer.parseInt(minion[2]),
+                                Integer.parseInt(minion[3])
                         )
                 );
             }
@@ -35,9 +35,7 @@ public class MinionCSVReader {
             ex.printStackTrace();
         }
 
-        for (HearthstoneCard card : minionList) {
-            System.out.println(card.getTitle());
-        }
+        return minionList;
     }
 
 }

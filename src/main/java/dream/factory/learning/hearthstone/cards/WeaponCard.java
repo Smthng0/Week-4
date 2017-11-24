@@ -39,13 +39,8 @@ public class WeaponCard implements HearthstoneCard {
         player.setAttack(this.attack);
         player.setMaxAttacks(1);
 
-        for (Ability ability : abilities) {
-            if (ability instanceof Battlecry){
-                ability.effect();
-            } else if (ability instanceof Windfury){
-                ability.effect();
-                player.setMaxAttacks(2);
-            }
+        if (getAbility("Windfury") != null){
+            player.setMaxAttacks(2);
         }
 
         player.setRemainingAttacks(player.getMaxAttacks());

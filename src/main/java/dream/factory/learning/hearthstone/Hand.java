@@ -80,10 +80,6 @@ public class Hand {
         return backingHand;
     }
 
-    public Deck getDeck() {
-        return deck;
-    }
-
     public int getLimit() {
         return limit;
     }
