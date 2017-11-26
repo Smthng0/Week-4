@@ -2,9 +2,40 @@ package dream.factory.learning.hearthstone;
 
 import dream.factory.learning.hearthstone.cards.MinionCard;
 
+import java.util.Scanner;
+
 public class Engine {
     private static Player activePlayer;
     private static Player passivePlayer;
+
+    public static void main(String[] args) {
+        Engine.availableActions();
+    }
+
+    public static void availableActions(){
+        Scanner scanner = new Scanner(System.in);
+        String command;
+        System.out.println("Available actions: ");
+        System.out.print("Play card");
+        System.out.print("  |  ");
+        System.out.print("Attack");
+        System.out.print("  |  ");
+        System.out.println("End turn");
+
+        do {
+            command = scanner.nextLine();
+            if (command.equalsIgnoreCase("Play card")) {
+                System.out.println("Choose card");
+
+            }
+
+            if (command.equalsIgnoreCase("Attack")) {
+                System.out.println("Choose Attackable");
+            }
+
+        } while (!command.equalsIgnoreCase("End turn"));
+
+    }
 
     public static void startTurn() {
         activePlayer.setManaPool(activePlayer.getManaPool()+1);
@@ -48,8 +79,6 @@ public class Engine {
 
         return activePlayer.getBoard().getAnyMinion();
     }
-
-    //board temporarely has everything static (need engine to do something)
 
     public static Player getFriendlyPlayer() {
         return activePlayer;
