@@ -70,8 +70,9 @@ public class Hand {
 
     public void viewHand() {
         for (HearthstoneCard card : backingHand) {
-            System.out.println(card.getTitle());
+            System.out.print(card.getTitle() + "  |  ");
         }
+        System.out.println();
     }
 
     public boolean hasCards(){

@@ -44,7 +44,7 @@ public class Player implements Attackable {
                     weapon.setDurability(weapon.getDurability()-1);
 
                     if (weapon.getDurability() == 0){
-                        weapon.removeFromPlay();
+                        goToGraveyard(weapon);
                         weapon = null;
                         remainingAttacks = 0;
                         System.out.println("Weapon used up!");

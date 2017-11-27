@@ -41,6 +41,13 @@ public class Board {
         return backingBoard;
     }
 
+    public void viewBoard() {
+        for (MinionCard minion : getAllMinions()) {
+            System.out.print(minion.getTitle() + "  |  ");
+        }
+        System.out.println();
+    }
+
     public void returnToHand(HearthstoneCard card){
         Engine.getFriendlyPlayer().addCard(card);
         card = null;
@@ -52,10 +59,6 @@ public class Board {
 
     private boolean isEmpty() {
         return numberOfMinions == 0;
-    }
-
-    public List<MinionCard> getBoard() {
-        return backingBoard;
     }
 
     public int getNumberOfMinions() {
