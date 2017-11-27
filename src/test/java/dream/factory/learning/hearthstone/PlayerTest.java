@@ -14,7 +14,6 @@ public class PlayerTest {
         Player player = new Player("Frane", deck, true);
 
         assertTrue(player.getNumberOfCards() == 3);
-        assertTrue(player.getBoard().getAnyMinion() == null);
         assertTrue(player.getBoard().getNumberOfMinions() == 0);
         assertTrue(player.getDeck().getRemainingCards() == 27);
     }

@@ -68,10 +68,43 @@ public class Hand {
         numberOfCards--;
     }
 
+    public int playCard(String title) {
+        for (HearthstoneCard card : backingHand) {
+            if (card.getTitle().equalsIgnoreCase(title)) {
+                playCard(card);
+                return card.getManaCost();
+            }
+        }
+        return -1;
+    }
+
+    public boolean checkMana(String title, int availableMana) {
+        for (HearthstoneCard card : backingHand) {
+            if ((card.getTitle().equalsIgnoreCase(title))
+                    && (card.getManaCost() <= availableMana)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void viewHand() {
         for (HearthstoneCard card : backingHand) {
-            System.out.print(card.getTitle() + "  |  ");
+            System.out.print(card.getTitle()
+                    + ", Mana cost: " + card.getManaCost());
+
+            if (card instanceof MinionCard) {
+                System.out.print(", Attack: " + ((MinionCard) card).getAttack()
+                        + ", Health: " + ((MinionCard) card).getHealth());
+            }
+
+            if (card.getTitle().equalsIgnoreCase("The Coin")){
+                System.out.print(", Ability: Add 1 temporary mana");
+            }
+
+            System.out.println();
         }
+
         System.out.println();
     }
 

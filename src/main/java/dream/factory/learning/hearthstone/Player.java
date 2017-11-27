@@ -198,7 +198,15 @@ public class Player implements Attackable {
         return true;
     }
 
-    private void viewHand() {
+    public int playCard(String title) {
+        if (hand.checkMana(title, remainingMana)) {
+            return hand.playCard(title);
+        }
+
+        return -1;
+    }
+
+    public void viewHand() {
         hand.viewHand();
     }
 
@@ -216,6 +224,14 @@ public class Player implements Attackable {
 
     public Board getBoard() {
         return this.board;
+    }
+
+    public MinionCard getMinion(String title){
+        return board.getMinion(title);
+    }
+
+    public void viewBoard() {
+        board.viewBoard();
     }
 
 }

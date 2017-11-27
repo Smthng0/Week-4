@@ -17,20 +17,31 @@ public class Board {
             System.out.println("Board is full");
         } else {
             backingBoard.add(card);
-            numberOfMinions++;
+            numberOfMinions = backingBoard.size();
         }
     }
 
     public void addToGraveyard(HearthstoneCard card){
+        numberOfMinions = backingBoard.size();
         graveyard.add(card);
     }
 
-    public MinionCard getAnyMinion(){
-        if (isEmpty()) {
-            return null;
-        } else {
-            return backingBoard.get(0);
+    public MinionCard getMinion(HearthstoneCard card){
+        for (MinionCard minion : backingBoard) {
+            if (minion.getTitle().equalsIgnoreCase(card.getTitle())) {
+                return minion;
+            }
         }
+        return null;
+    }
+
+    public MinionCard getMinion(String title) {
+        for (MinionCard minion : backingBoard) {
+            if (minion.getTitle().equalsIgnoreCase(title)) {
+                return minion;
+            }
+        }
+        return null;
     }
 
     public List<MinionCard> getAllMinions() {
@@ -42,10 +53,18 @@ public class Board {
     }
 
     public void viewBoard() {
-        for (MinionCard minion : getAllMinions()) {
-            System.out.print(minion.getTitle() + "  |  ");
+        if  (isEmpty()) {
+            System.out.println("Board empty!");
+        } else {
+            for (MinionCard minion : getAllMinions()) {
+                System.out.println(minion.getTitle()
+                        + ", Attack: " + minion.getAttack()
+                        + ", Health: " + minion.getHealth()
+                        + ", Remaining attacks: " + minion.getRemainingAttacks());
+
+            }
+            System.out.println();
         }
-        System.out.println();
     }
 
     public void returnToHand(HearthstoneCard card){

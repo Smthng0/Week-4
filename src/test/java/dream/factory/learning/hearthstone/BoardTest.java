@@ -15,7 +15,7 @@ public class BoardTest {
         MinionCard card = new MinionCard("Vice", 3, 4, 2);
         board.summonMinion(card);
 
-        assertTrue(board.getAnyMinion().getTitle().equals("Vice"));
+        assertTrue(board.getMinion("Vice") != null);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class BoardTest {
         MinionCard card = new MinionCard("Vice", 3, 4, 2);
         board.addToGraveyard(card);
 
-        assertTrue(board.getAnyMinion() == null);
+        assertTrue(board.getNumberOfMinions() == 0);
         assertTrue(board.getGraveyard().size() == 1);
 
         board.addToGraveyard(card);
