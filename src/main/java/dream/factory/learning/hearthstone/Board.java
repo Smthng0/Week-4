@@ -22,7 +22,6 @@ public class Board {
     }
 
     public void addToGraveyard(HearthstoneCard card){
-        numberOfMinions = backingBoard.size();
         graveyard.add(card);
     }
 
@@ -44,6 +43,22 @@ public class Board {
         return null;
     }
 
+    public MinionCard getMinion(int index) {
+        if (backingBoard.size() > index) {
+           return backingBoard.get(index);
+        }
+
+        return null;
+    }
+
+
+    public void removeMinion(String title) {
+        if (getMinion(title) != null) {
+            backingBoard.remove(getMinion(title));
+            numberOfMinions = backingBoard.size();
+        }
+    }
+
     public List<MinionCard> getAllMinions() {
         if (isEmpty()){
             return null;
@@ -57,7 +72,8 @@ public class Board {
             System.out.println("Board empty!");
         } else {
             for (MinionCard minion : getAllMinions()) {
-                System.out.println(minion.getTitle()
+                System.out.println(backingBoard.indexOf(minion) + ". "
+                        + minion.getTitle()
                         + ", Attack: " + minion.getAttack()
                         + ", Health: " + minion.getHealth()
                         + ", Remaining attacks: " + minion.getRemainingAttacks());

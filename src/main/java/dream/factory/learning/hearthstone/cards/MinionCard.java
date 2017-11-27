@@ -83,7 +83,9 @@ public class MinionCard implements HearthstoneCard, Attackable {
         }
 
         if (this.isDead()){
-            this.removeFromPlay();
+            System.out.println();
+            System.out.println(this.getTitle() + " died a horrible and gruesome death!  --------{---(@");
+            System.out.println();
         }
     }
 

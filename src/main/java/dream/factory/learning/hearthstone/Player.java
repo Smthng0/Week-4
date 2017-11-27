@@ -11,7 +11,7 @@ public class Player implements Attackable {
     private int armor = 0;
     private int maxAttacks = 0;
     private int remainingAttacks = 0;
-    private int health = 30;
+    private int health = 5;
     private int manaPool = 0;
     private int remainingMana = 0;
     private Ability classAbility = null;
@@ -61,8 +61,19 @@ public class Player implements Attackable {
         this.takeDamage(target.getAttack());
 
         if (this.isDead()){
-            System.out.println("I won!!!");
-            //need to make some victory stuff here
+            System.out.println("");
+            System.out.println("I won!!! <3");
+            System.out.println("Wooohooo");
+            System.out.println(this.playerName + " is th3 b3st 3vah!!!!");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("     /(|");
+            System.out.println("    (  :");
+            System.out.println("   __\\  \\  _____");
+            System.out.println(" (____)  `|");
+            System.out.println("(____)|   |");
+            System.out.println(" (____).__|");
+            System.out.println("  (___)__.|_____");
         }
     }
 
@@ -79,6 +90,9 @@ public class Player implements Attackable {
 
     public void goToGraveyard(HearthstoneCard card){
         board.addToGraveyard(card);
+        if (card instanceof MinionCard) {
+            board.removeMinion(card.getTitle());
+        }
     }
 
     @Override
@@ -183,8 +197,8 @@ public class Player implements Attackable {
         hand.discardCard(card);
     }
 
-    public void drawCard() {
-        hand.drawCard();
+    public HearthstoneCard drawCard() {
+        return hand.drawCard();
     }
 
     public boolean playCard(HearthstoneCard card) {
@@ -204,6 +218,21 @@ public class Player implements Attackable {
         }
 
         return -1;
+    }
+
+    public int playCard(int index) {
+        if (hand.checkMana(index, remainingMana)) {
+            return hand.playCard(index);
+        }
+
+        return -1;
+    }
+
+    public HearthstoneCard getCard(int index) {
+        if (hand.getNumberOfCards() > index){
+            return hand.getCard(index);
+        }
+        return null;
     }
 
     public void viewHand() {
@@ -228,6 +257,10 @@ public class Player implements Attackable {
 
     public MinionCard getMinion(String title){
         return board.getMinion(title);
+    }
+
+    public MinionCard getMinion(int index){
+        return board.getMinion(index);
     }
 
     public void viewBoard() {

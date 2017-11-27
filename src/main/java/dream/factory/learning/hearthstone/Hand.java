@@ -29,9 +29,11 @@ public class Hand {
 
     }
 
-    public void drawCard() {
+    public HearthstoneCard drawCard() {
         numberOfCards++;
-        backingHand.add(deck.drawCard());
+        HearthstoneCard card = deck.drawCard();
+        backingHand.add(card);
+        return card;
     }
 
     public void addCard(HearthstoneCard card) {
@@ -78,6 +80,24 @@ public class Hand {
         return -1;
     }
 
+    public int playCard(int index) {
+        if (backingHand.size() > index){
+            int mana = backingHand.get(index).getManaCost();
+            playCard(backingHand.get(index));
+            return mana;
+        }
+
+        return -1;
+    }
+
+    public HearthstoneCard getCard(int index) {
+        if (backingHand.size() > index) {
+            return backingHand.get(index);
+        }
+
+        return null;
+    }
+
     public boolean checkMana(String title, int availableMana) {
         for (HearthstoneCard card : backingHand) {
             if ((card.getTitle().equalsIgnoreCase(title))
@@ -88,9 +108,18 @@ public class Hand {
         return false;
     }
 
+    public boolean checkMana(int index, int availableMana) {
+        if ((backingHand.size() > index)
+            && (backingHand.get(index).getManaCost() <= availableMana)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public void viewHand() {
         for (HearthstoneCard card : backingHand) {
-            System.out.print(card.getTitle()
+            System.out.print(backingHand.indexOf(card) + ". " + card.getTitle()
                     + ", Mana cost: " + card.getManaCost());
 
             if (card instanceof MinionCard) {

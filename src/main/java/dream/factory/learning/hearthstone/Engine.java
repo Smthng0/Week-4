@@ -82,7 +82,7 @@ public class Engine {
             }
 
             if (command.equalsIgnoreCase("Attack")) {
-                chooseAttackable();
+                attack();
             }
 
             if ((command.equalsIgnoreCase("Check status"))
@@ -106,27 +106,39 @@ public class Engine {
         System.out.println("Available mana:  " + activePlayer.getRemainingMana());
         separator();
         command = scanner.nextLine();
-        System.out.println();
-        int mana = activePlayer.playCard(command);
+        int index;
+        try {
+            index = Integer.parseInt(command);
+        } catch (Exception ex) {
+            return;
+        }
+        if (index < activePlayer.getNumberOfCards()
+                && (index >= 0)) {
+            command = activePlayer.getCard(index).getTitle();
+            int mana = activePlayer.playCard(index);
 
-        if (mana == -1) {
-            System.out.println("Card not played! (no such card or not enough mana) ");
-            System.out.println();
-        } else {
-            if (command.equalsIgnoreCase("The Coin")) {
-                activePlayer.setRemainingMana(activePlayer.getRemainingMana()+1);
+            if (mana == -1){
+                System.out.println("Card not played! (no such card or not enough mana) ");
+            } else {
+                if (command.equalsIgnoreCase("The Coin")) {
+                    activePlayer.setRemainingMana(activePlayer.getRemainingMana() + 1);
+                }
+
+                activePlayer.setRemainingMana(activePlayer.getRemainingMana() - mana);
+                System.out.println("Card " + command + " played successfully!");
+                System.out.println(command + " costs " + mana + " mana.");
+                System.out.println("Remaining mana: " + activePlayer.getRemainingMana());
             }
 
-            activePlayer.setRemainingMana(activePlayer.getRemainingMana() - mana);
-            System.out.println("Card " + command + " played successfully!");
-            System.out.println(command + " costs " + mana + " mana.");
-            System.out.println("Remaining mana: " + activePlayer.getRemainingMana());
+        } else {
+            System.out.println("Card not played! (no such card or not enough mana) ");
         }
 
+        System.out.println();
         separator();
     }
 
-    public static void chooseAttackable() {
+    public static void attack() {
         if (activePlayer.getBoard().getAllMinions() == null) {
             System.out.println();
             System.out.println("No minions! ");
@@ -135,30 +147,77 @@ public class Engine {
             System.out.println("Choose Minion");
             separator();
             activePlayer.viewBoard();
+            int index;
             command = scanner.nextLine();
             System.out.println();
-            if (activePlayer.getMinion(command) != null){
-                if (activePlayer.getMinion(command).getRemainingAttacks() > 0) {
-                    MinionCard attackingMinion = activePlayer.getMinion(command);
+            try {
+                index = Integer.parseInt(command);
+            } catch (Exception ex) {
+                return;
+            }
+            if ((activePlayer.getBoard().getNumberOfMinions() > index)
+                    && (index >= 0)) {
+                if (activePlayer.getMinion(index).getRemainingAttacks() > 0) {
+                    MinionCard attackingMinion = activePlayer.getMinion(index);
                     System.out.println("Available targets: ");
+                    separator();
                     if (passivePlayer.getBoard().getNumberOfMinions() > 0){
+                        System.out.println("Minions: ");
                         passivePlayer.viewBoard();
                     }
-                    System.out.println(passivePlayer.getPlayerName());
-                    command = scanner.nextLine();
+                    System.out.println("Player: ");
+                    System.out.println((passivePlayer.getBoard().getNumberOfMinions())
+                            + ".  " + passivePlayer.getPlayerName());
 
-                    if (passivePlayer.getMinion(command) != null) {
-                        attackingMinion.attack(passivePlayer.getMinion(command));
-                        System.out.println(attackingMinion.getTitle() + " did "
-                                + attackingMinion.getAttack() + " damage to"
-                                + passivePlayer.getMinion(command) + "!");
+                    command = scanner.nextLine();
+                    System.out.println();
+                    try {
+                        index = Integer.parseInt(command);
+                    } catch (Exception ex) {
+                        return;
                     }
 
-                    if (passivePlayer.getPlayerName().equalsIgnoreCase(command)) {
-                        attackingMinion.attack(passivePlayer);
+                    if (passivePlayer.getMinion(index) != null) {
+                        MinionCard defendingMinion = passivePlayer.getMinion(index);
+
+                        System.out.println(attackingMinion.getTitle() + " did "
+                                + attackingMinion.getAttack() + " damage to "
+                                + defendingMinion.getTitle()
+                                + "!  |  " + attackingMinion.getTitle()
+                                + "'s remaining health: " + attackingMinion.getHealth());
+                        System.out.println(defendingMinion.getTitle() + " did "
+                                + defendingMinion.getAttack() + " damage to "
+                                + attackingMinion.getTitle() + "!  |  "
+                                + defendingMinion.getTitle()
+                                + "'s remaining health: "
+                                + defendingMinion.getHealth());
+
+                        attackingMinion.attack(passivePlayer.getMinion(index));
+
+                        if (defendingMinion.isDead()){
+                            passivePlayer.goToGraveyard(defendingMinion);
+                        }
+                        if (attackingMinion.isDead()){
+                            activePlayer.goToGraveyard(attackingMinion);
+                        }
+                    }
+
+                    if (index == (passivePlayer.getBoard().getNumberOfMinions())) {
                         System.out.println(attackingMinion.getTitle() + " did "
                                 + attackingMinion.getAttack()
                                 + " damage to " + passivePlayer.getPlayerName() + "!");
+
+                        attackingMinion.attack(passivePlayer);
+
+                        if (passivePlayer.isDead()) {
+                            System.out.println("");
+                            System.out.println("Press Enter to exit");
+                            scanner.nextLine();
+                            command = "exit";
+                        } else {
+                            System.out.println(passivePlayer.getPlayerName()
+                                    + "'s remaining health: " + passivePlayer.getHealth());
+                        }
                     }
 
                 } else {
@@ -171,8 +230,6 @@ public class Engine {
                 separator();
             }
 
-            System.out.println(passivePlayer.getPlayerName()
-                    + "'s remaining health: " + passivePlayer.getHealth());
             System.out.println();
             separator();
         }
@@ -208,7 +265,9 @@ public class Engine {
         activePlayer.setManaPool(activePlayer.getManaPool()+1);
         activePlayer.setRemainingMana(activePlayer.getManaPool());
         activePlayer.setRemainingAttacks(activePlayer.getMaxAttacks());
-        activePlayer.drawCard();
+        HearthstoneCard card = activePlayer.drawCard();
+        System.out.println(activePlayer.getPlayerName() + " drew "
+                + card.getTitle() + " Mana cost: " + card.getManaCost());
 
         if (activePlayer.getBoard().getAllMinions() != null) {
             for (MinionCard minion : activePlayer.getBoard().getAllMinions()) {
@@ -279,11 +338,13 @@ public class Engine {
         String minionName = scanner.nextLine();
 
         for (int i = 0; i < 30; i++) {
+            int x = random.nextInt(5);
+            int y = random.nextInt(4);
             arrayDeck.add(
                     new MinionCard((minionName+(i+1)),
-                            random.nextInt(9),
-                            (random.nextInt(8)+1),
-                            (random.nextInt(8)+1)
+                            x+y,
+                            x+x+y,
+                            x+y+y+1
                     )
             );
         }
