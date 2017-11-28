@@ -11,7 +11,7 @@ public class Player implements Attackable {
     private int armor = 0;
     private int maxAttacks = 0;
     private int remainingAttacks = 0;
-    private int health = 5;
+    private int health = 15;
     private int manaPool = 0;
     private int remainingMana = 0;
     private Ability classAbility = null;
