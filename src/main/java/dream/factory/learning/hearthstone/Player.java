@@ -64,7 +64,7 @@ public class Player implements Attackable {
             System.out.println("");
             System.out.println("I won!!! <3");
             System.out.println("Wooohooo");
-            System.out.println(this.playerName + " is th3 b3st 3vah!!!!");
+            System.out.println(Engine.getFriendlyPlayer().getPlayerName() + " is th3 b3st!!! 3vah!!!!");
             System.out.println("");
             System.out.println("");
             System.out.println("     /(|");

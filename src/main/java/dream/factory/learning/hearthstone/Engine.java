@@ -24,23 +24,25 @@ public class Engine {
             checkStatus();
             chooseAction();
         } while ((!command.equalsIgnoreCase("Exit game"))
-                && (!command.equalsIgnoreCase("Exit")));
+                && (!command.equalsIgnoreCase("Exit"))
+                && (!command.equalsIgnoreCase("x")));
     }
 
     public static void createPlayers() {
+        System.out.println("Enter first player name: ");
+        command = scanner.nextLine();
         System.out.println("Enter first players minion names: ");
         Deck deck1 = createDeck();
-        System.out.println("Enter first player name: ");
-        player1 = new Player(scanner.nextLine(), deck1, true);
+        player1 = new Player(command, deck1, true);
 
+        System.out.println("Enter second player name: ");
+        command = scanner.nextLine();
         System.out.println("Enter second players minion names: ");
         Deck deck2 = createDeck();
-        System.out.println("Enter second player name: ");
-        player2 = new Player(scanner.nextLine(), deck2, false);
+        player2 = new Player(command, deck2, false);
         activePlayer = player1;
         passivePlayer = player2;
         System.out.println();
-
         System.out.println("****************************************");
         System.out.println("\\\\**..  " + player1.getPlayerName() + "  vs  " + player2.getPlayerName() + "  ..**//");
         separator();
@@ -51,21 +53,22 @@ public class Engine {
         System.out.println("It's " + activePlayer.getPlayerName() + "'s turn!");
         System.out.println("Turn number: " + (int)Math.ceil(turnCounter/2));
         startTurn();
-        separator();
     }
 
     public static void availableActions(){
         System.out.println("Available actions: ");
         separator();
-        System.out.print("Play card");
+        System.out.print("(P)lay card");
         System.out.print("  |  ");
-        System.out.print("Attack");
+        System.out.print("(A)ttack");
         System.out.print("  |  ");
-        System.out.print("Check status");
+        System.out.print("(C)heck status");
         System.out.print("  |  ");
-        System.out.print("End turn");
+        System.out.print("(V)iew board");
         System.out.print("  |  ");
-        System.out.println("Exit game");
+        System.out.print("(E)nd turn");
+        System.out.print("  |  ");
+        System.out.println("E(x)it game");
         separator();
     }
 
@@ -77,23 +80,35 @@ public class Engine {
             System.out.println();
             if ((command.equalsIgnoreCase("Play card"))
                     || (command.equalsIgnoreCase("Play"))
+                    || (command.equalsIgnoreCase("P"))
                     || (command.equalsIgnoreCase("card"))) {
                 playCard();
             }
 
-            if (command.equalsIgnoreCase("Attack")) {
+            if ((command.equalsIgnoreCase("Attack"))
+                    || (command.equalsIgnoreCase("A"))) {
                 attack();
             }
 
             if ((command.equalsIgnoreCase("Check status"))
                     || (command.equalsIgnoreCase("status"))
+                    || (command.equalsIgnoreCase("c"))
                     || (command.equalsIgnoreCase("check"))) {
                 checkStatus();
             }
 
+            if ((command.equalsIgnoreCase("View board"))
+                    || (command.equalsIgnoreCase("view"))
+                    || (command.equalsIgnoreCase("v"))
+                    || (command.equalsIgnoreCase("board"))) {
+                viewBoard();
+            }
+
         } while ((!command.equalsIgnoreCase("End turn"))
                 && (!command.equalsIgnoreCase("End"))
+                && (!command.equalsIgnoreCase("e"))
                 && (!command.equalsIgnoreCase("Exit"))
+                && (!command.equalsIgnoreCase("x"))
                 && (!command.equalsIgnoreCase("Exit game")));
 
         endTurn();
@@ -107,17 +122,19 @@ public class Engine {
         separator();
         command = scanner.nextLine();
         int index;
+
         try {
             index = Integer.parseInt(command);
         } catch (Exception ex) {
             return;
         }
+
         if (index < activePlayer.getNumberOfCards()
                 && (index >= 0)) {
             command = activePlayer.getCard(index).getTitle();
             int mana = activePlayer.playCard(index);
 
-            if (mana == -1){
+            if (mana == -1) {
                 System.out.println("Card not played! (no such card or not enough mana) ");
             } else {
                 if (command.equalsIgnoreCase("The Coin")) {
@@ -150,27 +167,41 @@ public class Engine {
             int index;
             command = scanner.nextLine();
             System.out.println();
+
             try {
                 index = Integer.parseInt(command);
             } catch (Exception ex) {
                 return;
             }
+
             if ((activePlayer.getBoard().getNumberOfMinions() > index)
                     && (index >= 0)) {
                 if (activePlayer.getMinion(index).getRemainingAttacks() > 0) {
                     MinionCard attackingMinion = activePlayer.getMinion(index);
-                    System.out.println("Available targets: ");
+
+                    System.out.println("Available targets for "
+                            + activePlayer.getPlayerName() + "'s "
+                            + attackingMinion.getTitle() + " : ");
+
+                    System.out.println("( attack : " + attackingMinion.getAttack()
+                            + " , health: " + attackingMinion.getHealth()
+                            + " , remaining attacks: "
+                            + attackingMinion.getRemainingAttacks() + " ) ");
+
                     separator();
+
                     if (passivePlayer.getBoard().getNumberOfMinions() > 0){
                         System.out.println("Minions: ");
                         passivePlayer.viewBoard();
                     }
+
                     System.out.println("Player: ");
                     System.out.println((passivePlayer.getBoard().getNumberOfMinions())
                             + ".  " + passivePlayer.getPlayerName());
 
                     command = scanner.nextLine();
                     System.out.println();
+
                     try {
                         index = Integer.parseInt(command);
                     } catch (Exception ex) {
@@ -179,20 +210,25 @@ public class Engine {
 
                     if (passivePlayer.getMinion(index) != null) {
                         MinionCard defendingMinion = passivePlayer.getMinion(index);
+                        attackingMinion.attack(passivePlayer.getMinion(index));
 
-                        System.out.println(attackingMinion.getTitle() + " did "
+                        System.out.println(activePlayer.getPlayerName() + "'s "
+                                + attackingMinion.getTitle() + " did "
                                 + attackingMinion.getAttack() + " damage to "
-                                + defendingMinion.getTitle()
-                                + "!  |  " + attackingMinion.getTitle()
-                                + "'s remaining health: " + attackingMinion.getHealth());
-                        System.out.println(defendingMinion.getTitle() + " did "
-                                + defendingMinion.getAttack() + " damage to "
-                                + attackingMinion.getTitle() + "!  |  "
+                                + passivePlayer.getPlayerName() + "'s "
+                                + defendingMinion.getTitle() + "!  |  "
                                 + defendingMinion.getTitle()
                                 + "'s remaining health: "
-                                + defendingMinion.getHealth());
+                                + (defendingMinion.getHealth()));
 
-                        attackingMinion.attack(passivePlayer.getMinion(index));
+                        System.out.println(passivePlayer.getPlayerName() + "'s "
+                                + defendingMinion.getTitle() + " did "
+                                + defendingMinion.getAttack() + " damage to "
+                                + activePlayer.getPlayerName() + "'s "
+                                + attackingMinion.getTitle() + "!  |  "
+                                + attackingMinion.getTitle()
+                                + "'s remaining health: "
+                                + attackingMinion.getHealth());
 
                         if (defendingMinion.isDead()){
                             passivePlayer.goToGraveyard(defendingMinion);
@@ -204,8 +240,8 @@ public class Engine {
 
                     if (index == (passivePlayer.getBoard().getNumberOfMinions())) {
                         System.out.println(attackingMinion.getTitle() + " did "
-                                + attackingMinion.getAttack()
-                                + " damage to " + passivePlayer.getPlayerName() + "!");
+                                + attackingMinion.getAttack() + " damage to "
+                                + passivePlayer.getPlayerName() + "!");
 
                         attackingMinion.attack(passivePlayer);
 
@@ -236,7 +272,7 @@ public class Engine {
     }
 
     public static void checkStatus() {
-        System.out.println("Player " + activePlayer.getPlayerName() + " status: ");
+        System.out.println("Player " + activePlayer.getPlayerName() + "'s status: ");
         separator();
         System.out.print("Your health: ");
         System.out.print(activePlayer.getHealth());
@@ -259,15 +295,29 @@ public class Engine {
         separator();
     }
 
-
+    public static void viewBoard() {
+        System.out.println("My board: ");
+        System.out.println();
+        activePlayer.viewBoard();
+        separator();
+        System.out.println("Enemy board: ");
+        System.out.println();
+        passivePlayer.viewBoard();
+        System.out.println();
+    }
 
     public static void startTurn() {
         activePlayer.setManaPool(activePlayer.getManaPool()+1);
         activePlayer.setRemainingMana(activePlayer.getManaPool());
         activePlayer.setRemainingAttacks(activePlayer.getMaxAttacks());
         HearthstoneCard card = activePlayer.drawCard();
-        System.out.println(activePlayer.getPlayerName() + " drew "
-                + card.getTitle() + " Mana cost: " + card.getManaCost());
+        separator();
+
+        System.out.println(activePlayer.getPlayerName() + " drew a "
+                + card.getClass().getSimpleName() + " :   card : asdf"
+                + card.getTitle() + " , Mana cost: "
+                + card.getManaCost());
+
 
         if (activePlayer.getBoard().getAllMinions() != null) {
             for (MinionCard minion : activePlayer.getBoard().getAllMinions()) {
