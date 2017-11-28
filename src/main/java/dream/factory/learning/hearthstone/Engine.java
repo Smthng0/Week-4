@@ -161,7 +161,7 @@ public class Engine {
             System.out.println("No minions! ");
             separator();
         } else {
-            System.out.println("Choose Minion");
+            System.out.println("Choose who till attack: ");
             separator();
             activePlayer.viewBoard();
             int index;
