@@ -1,11 +1,21 @@
-package dream.factory.learning.readers;
+package dream.factory.learning.web;
+
+import com.google.gson.annotations.SerializedName;
+import com.univocity.parsers.annotations.Parsed;
 
 public class Product {
+    @Parsed
     private String title;
+    @Parsed
     private String url;
+    @Parsed
     private int id;
+    @Parsed
     private float price;
+    @Parsed
     private String category;
+    @Parsed
+    @SerializedName("image_url")
     private String imageUrl;
 
     public String getTitle() {

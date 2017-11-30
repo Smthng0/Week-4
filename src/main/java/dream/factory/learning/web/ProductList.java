@@ -1,7 +1,6 @@
-package dream.factory.learning.readers;
+package dream.factory.learning.web;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProductList {
