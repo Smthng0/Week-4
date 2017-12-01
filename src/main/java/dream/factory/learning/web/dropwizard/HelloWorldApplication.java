@@ -1,6 +1,7 @@
 package dream.factory.learning.web.dropwizard;
 
 import dream.factory.learning.web.dropwizard.health.TemplateHealthCheck;
+import dream.factory.learning.web.dropwizard.resources.FraneSuckas;
 import dream.factory.learning.web.dropwizard.resources.HelloWorldResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -32,5 +33,6 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
                 new TemplateHealthCheck(configuration.getTemplate());
          environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
+        environment.jersey().register(new FraneSuckas());
     }
 }
