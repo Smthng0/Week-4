@@ -10,7 +10,7 @@ import feign.gson.GsonDecoder;
 
 import java.io.File;
 
-public class FeignToCSV {
+public class FeignToCSVWritter {
 
     public ProductList readWeb() {
         String franeAPI = "https://ai-eu.nextuser.com/undiz_fr/PRODUCT/recommendations?variation=VISII";

@@ -10,7 +10,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 
-public class Java9ToCSV {
+public class Java9ToCSVWritter {
   /*  public void getFromWebJavaApi() {
         HttpClient client = HttpClient.newHttpClient();
 
